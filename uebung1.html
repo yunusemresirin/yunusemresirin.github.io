@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <nav>
+            <a href="solutions.html">Zurück</a>
+        </nav>
+        <h2>Übung 1</h2>
+        <h3>1.1 Fachliche Argumentation über Erfolgsprinzipien des WWW</h3>
+        <ol>
+            <li>Mit welchen fachlichen Argumenten wurde das WWW-Proposal von TBL abgelehnt?</li>
+            <ul>
+                <li>Die Wagheit im Konzept war nicht verständlich und wurde mit der Involvierbarkeit verwechselt.</li>
+                <li>
+                    Die Hypertext-Community war der Meinung, dass die Wissenschaft viel weiter vorankam und das Konzept
+                    von Tim Burners Lee zurückgeblieben ist. (Einer der Problematiken, mit denen sich das Berner-Konzept befasste,
+                    war das "Broken Link", also Verlinkungen, die jedoch auf nicht-vorhandene Seiten bzw. Daten verweisen, somit einen Fehler im Programm darstellen)
+                </li>
+            </ul>
+            <li>Was sind die fachlichen Argumente, warum das WWW dennoch ein Erfolg wurde?</li>
+            <ul>
+                <li>
+                    <q>Broken Links</q> waren möglich, da der Foreign-Key der Elemente ins Leere zeigen konnte, jedoch
+                    konnte dies bei sorgfältiger Codierung verhindert werden.  
+                </li>
+                <li>Das WWW fand seinen Erfolg in seiner Skalierbarkeit der Codes und seiner Effizienz bei Verlinkungen auf Ressourcen. Außerdem war die Nicht-Lizensierung
+                    ein ausschlaggebender Punkt bei der Entwicklung von Servern und Clients. 
+                </li>
+            </ul>
+            <li>Was wäre der Preis für die garantierte Verhinderung von "Broken Links"?</li>
+            <ul>
+                <li>
+                    Man benötigt referenzielle Integrität. Bei jedem Link muss der Foreign-Key geprüft werden. 
+                    Der Attributwert des Fremdschlüssels muss auch bei einer Entität als Primärschlüssel existieren. 
+                    Um <q>Broken Links</q> garantiert zu verhindern, müsste sichergestellt werden, dass dies immer geprüft wird.
+                </li>
+            </ul>
+        </ol>
+        <h3>1.2 HTTP</h3>
+        <ol>
+            <li>Sie bekommen im Browser den HTTP Status Code 200. Was bedeutet das?</li>
+            <ul>
+                <li><b>OK</b>: Die Anfrage wurde erfolgreich bearbeitet und das Ergebnis der Anfrage wird in der Antwort übertragen.</li>
+            </ul>
+            <li>Sie bekommen im Browser den HTTP Status Code 301. Was hat das zu bedeuten?</li>
+            <ul>
+                <li>
+                    <b>Moved Permanently</b>: Die angeforderte Ressource steht ab sofort unter der im „Location“-Header-Feld angegebenen Adresse bereit 
+                    (auch Redirect genannt). Die alte Adresse ist nicht länger gültig. Der Nutzer wird umgeleitet.
+                </li>
+            </ul>
+            <li>Sie bekommen im Browser den HTTP Status Code 400. Was hat das zu bedeuten? Was können Sie dagegen tun?</li>
+            <ul>
+                <li>
+                    <b>Bad Request</b>: Die Anfrage-Nachricht war fehlerhaft aufgebaut. Dies lässt sich durch eine
+                    einfache Aktualisierung der betreffenden Seite beheben.
+                </li>
+            </ul>
+            <li>Sie bekommen im Browser den HTTP Status Code 403. Was hat das zu bedeuten? Was können Sie dagegen tun?</li> 
+            <ul>
+                <li>
+                    <b>Forbidden</b>: Die Anfrage wurde mangels Berechtigung des Clients nicht durchgeführt, bspw. 
+                    weil der authentifizierte Benutzer nicht berechtigt ist oder eine als HTTPS konfigurierte URL nur mit HTTP aufgerufen wurde.
+                    Der Benutzer muss sich vor dem Aufruf der Seite autorisieren.
+                </li>
+            </ul>
+            <li>
+                In einer Webanwendung benötigen Sie eine OPTIONS-Anfrage, die die Optionen des Servers vor dem eigentlichen Zugriff erfragen soll. 
+                Aus Performanzgründen soll die Abfrage jedoch cacheable sein. Wie könnten Sie dafür eine Lösung angehen?
+            </li>
+            <ul>
+                <li></li>
+            </ul>
+        </ol>
+        <h3>1.3 HTML-Literatur lesen und Fragen beantworten</h3>
+        <ol>
+            <li>Was ist HTML?</li>
+            <ul>
+                <li>Steht für <q>Hyper Text Markup Language</q></li>
+                <li>Standardisiertes Markup Language um Webseiten zu entwickeln</li>
+                <li>
+                    Beschreibt die Struktur einer Webseite in Form von aneinandergereihten Elementen, 
+                    die dem Browser mitteilen, wie der Inhalt abgebildet werden soll.
+                </li>
+            </ul>
+        </ol>
+    </body>
+</html>

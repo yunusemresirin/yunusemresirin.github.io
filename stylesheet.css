@@ -1,14 +1,36 @@
 body {
     display: flex;
+    position: relative;
     align-items: center;
-    flex-direction: column;
+    justify-content: center;
 }
 
+/*
 .nav {
     display:inline;
-    align-items: stretch;
+    align-items: center;
+    justify-content: end;
+    width: auto;
+    padding: 1px 1rem;
+}
+
+.nav::after {
+    content: "";
+    clear: both;
+    display: table;
 }
 
 .nav .nav-link ul {
+    left: 10rem;
     list-style: none;
 }
+
+.nav .nav-link li {
+    float: left;
+}
+
+.nav .nav-link a {
+    text-align: center;
+    display: block;
+    padding: 1px 1rem;
+}*/
