@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html>
-    <head></head>
+    <head>
+        <style>
+            #table1 th, #table1 td {
+                border: 1px solid black;
+            }
+
+            #table1 {
+                border: 10px;
+                border-style: outset;
+                margin-bottom: 15px;
+            }
+        </style>
+    </head>
     <body>
         <nav>
             <a href="solutions.html">Zurück</a>
@@ -122,5 +134,52 @@
             </ul>
         </ol>
         <h3>1.4 HTML Wireframe</h3>
+        <h2>Übung 1.2: Inventors of the Web</h2>
+        <ul>
+            <li><b style="background-color: yellow; text-decoration: underline;">Tim Berners-Lee:</b> WWW, HTTP, HTML, URI</li>
+            <li><b>Hakom Lie and Bert Bos:</b> CSS</li>
+            <li><b>Brendan Eich:</b> JavaScript</li>
+        </ul>
+        <hr />
+        <h3>Inventors of the WWW</h3>
+        <table id="table1">
+            <tr>
+                <th colspan="4">Inventors of the WWW</th>
+            </tr>
+            <tr>
+                <th>WWW</th>
+                <th>HTML</th>
+                <th>CSS</th>
+                <th>JavaScript</th>
+            </tr>
+            <tr>
+                <td style="background-color: yellow;">Tim Berners-Lee</td>
+                <td style="background-color: yellow;">Tim Berners-Lee</td>
+                <td>Hakom Lie and Bert Bos</td>
+                <td>Brendan Eich</td>
+            </tr>
+        </table>
+        <hr />
+        <table id="table2">
+            <tr>
+                <th colspan="3" style="border-bottom: 3px solid rgb(198, 198, 198);">Inventors of the WWW</th>
+            </tr>
+            <tr>
+                <th>HTML</th>
+                <th><b>|</b></th>
+                <th>JavaScript</th>
+            </tr>
+            <tr>
+                <td><img src="img/tbl.jpg" style="height: 154px; width: 114px;"/></td>
+                <td><b>|</b></td>
+                <td><img src="img/eich.jpg" height="155px" width="114px"/></td>
+            </tr>
+            <tr>
+                <td><label style="background-color: yellow;">Tim Berners-Lee</label></td>
+                <td><b>|</b></td>
+                <td>Brendan Eich</td>
+            </tr>
+        </table>
+        <hr />
     </body>
 </html>
