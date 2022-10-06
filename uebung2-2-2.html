@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Obiwan Kenobi</title>
+        <style>
+            div {
+                border: 1px solid black;
+                padding: 5px;
+                margin: 1em 0;
+            }
+
+            img {
+                opacity: 0;
+            }
+
+            input[type="checkbox"]:checked ~ div > img {
+                opacity: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <a href="uebung2.html">Zurueck</a>
+        <br />
+        <br />
+        <!-- form nicht notwendig, aber fuer  -->
+        <form>
+            <!-- Ebene 1 -->
+            <input type="checkbox" name="hide-1"> 
+            <!-- Falls checked, dann soll Transparenz von img auf 0 gesetzt werden -->
+            <label for="hide-1">hide and show via checkbox</label>
+            <div>
+                <!-- Kind von div -->
+                <img alt="Obiwan Kenobi" src="img/OBK.jpg" height="100%" width="100%"/>
+            </div>
+        </form>
+    </body>
+</html>
