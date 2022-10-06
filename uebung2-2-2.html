@@ -13,8 +13,12 @@
                 opacity: 0;
             }
 
-            input[type="checkbox"]:checked ~ div > img {
+            input[type="checkbox"]:checked ~ div > img, input[type="checkbox"]:checked ~ label > span {
                 opacity: 1;
+            }
+
+            label > span {
+                opacity: 0;
             }
         </style>
     </head>
@@ -27,7 +31,7 @@
             <!-- Ebene 1 -->
             <input type="checkbox" name="hide-1"> 
             <!-- Falls checked, dann soll Transparenz von img auf 0 gesetzt werden -->
-            <label for="hide-1">hide and show via checkbox</label>
+            <label for="hide-1">hide and show via checkbox<span style="margin-left: 3em;">Hello There!</span></label>
             <div>
                 <!-- Kind von div -->
                 <img alt="Obiwan Kenobi" src="img/OBK.jpg" height="100%" width="100%"/>

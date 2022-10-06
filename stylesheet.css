@@ -1,36 +1,30 @@
 body {
-    display: flex;
     position: relative;
-    align-items: center;
-    justify-content: center;
-}
-
-/*
-.nav {
-    display:inline;
-    align-items: center;
-    justify-content: end;
-    width: auto;
-    padding: 1px 1rem;
-}
-
-.nav::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-
-.nav .nav-link ul {
-    left: 10rem;
-    list-style: none;
-}
-
-.nav .nav-link li {
-    float: left;
-}
-
-.nav .nav-link a {
     text-align: center;
-    display: block;
-    padding: 1px 1rem;
-}*/
+    background-color: #f9f5ee;
+}
+
+nav {
+    display: inline-block;
+    background-color: white;
+    border: 1px solid brown;
+    border-radius: 0.5em;
+    padding: 1em;
+    margin: 1.5em;
+}
+
+nav > a {
+    font-size: 14px;
+    text-decoration: none;
+    color: black;
+    background-color: blanchedalmond;
+    padding: 10px;
+    margin: 0.5em;
+    border-radius: 5px;
+}
+
+nav > a:hover {
+    background-color:bisque;
+    color: black;
+    font-weight: bold;
+}
