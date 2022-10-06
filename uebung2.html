@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            ol li span {
+                padding: 0px 2px;
+                background-color: rgb(255, 220, 220);
+                color: red;
+            }
+
+            ol li {
+                margin: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <nav><a href="solutions.html">Zurück</a></nav>
+        <h2>Übung 2: CSS</h2>
+        
+        <!-- 2.1 -->
+        
+        <h3>2.1 CSS Selektoren und CSS farben</h3>
+        <p>Berechnen Sie die Spezifität folgender CSS-Selektoren:</p>
+        <ol>
+            <li><span>div div div:focus .inner</span></li>
+            <ul>
+                <li>1 + 1 + 1 + 10 + 10 = 23</li>
+            </ul>
+            <li><span>h1 + div.main</span></li>
+            <ul>
+                <li>1 + 1 + 10 = 22</li>
+            </ul>
+            <li><span>div a:link[href*='h-brs']</span></li>
+            <ul>
+                <li>1 + 1 + 10 = 12</li>
+            </ul>
+            <li><span>nav > a:hover::before</span></li>
+            <ul>
+                <li>1 + 1 + 10 + 1 = 13</li>
+            </ul>
+            <li><span>ul#primary-nav li.active</span></li>
+            <ul>
+                <li>1 + 100 + 1 + 10 = 112</li>
+            </ul>
+        </ol>
+        <p>Rechnen Sie folgende RGB-Werte in HSL-Werte um:</p>
+        <ol>
+            <li><span>#fffff</span></li>
+            <ul>
+                <li>Als RGB-Wert ergibt dies <q>rgb (255, 255, 255)</q>, also erhalten wir: hsl (100, 100, 100)</li>
+            </ul>
+            <li><span>#000</span></li>
+            <ul>
+                <li>Als RGB-Wert ergibt dies <q>rgb (0, 0, 0)</q>, also erhalten wir: hsl (0, 0, 100)</li>
+            </ul>
+            <li><span>#ab0978</span></li>
+            <ul>
+                <li>Als RGB-Wert ergibt dies <q>rgb (171, 9, 120)</q>, also erhalten wir: hsl (89, 90, 35)</li>
+            </ul>
+            <li><span>rgb(127, 255, 33)</span></li>
+            <ul>
+                <li>hsl (95, 100, 56.5)</li>
+            </ul>
+            <li><span>rgba(255, 127, 33, 0.8)</span></li>
+            <ul>
+                <li>hsla (25, 100, 56.5, 0.8)</li>
+            </ul>
+        </ol>
+        <br />
+
+        <!-- 2.2 -->
+        
+        <h3>2.2 CSS-Positionierung</h3>
+
+    </body>
+</html>
