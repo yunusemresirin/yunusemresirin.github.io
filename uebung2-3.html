@@ -1,32 +1,242 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Übung 2.3</title>
+    
         <style>
-            body {
+            a{
+                color: black;
+                text-decoration: none;
+                font-size: larger;
+            }
+            a:hover{
+                color: gray;
+            }
+            body{
                 background-color: #a9d7d1;
-                display: block;
+                font-family: Helvetica, Arial;
+            }
+    
+            #aeussereBox{
+                background-color: #a9d7d1;
                 text-align: center;
             }
-
-            h2 {
-                color: black;
-            }
-
-            div {
-                position: relative;
+    
+            #innereBox{
                 background-color: white;
-                padding: 1em;
+                margin: auto;
+                width: 800px;
+                border-radius: 10px;
+                padding: 20px 10px 10px 10px;
+            } 
+    
+            p{
+                padding-top: 20px;
+                display: block;
+                margin-block-start: 1em;
+                margin-block-end: 1em;
+                margin-inline-start: 0px;
+                margin-inline-end: 0px;
             }
+            
+            .form-rows {
+                position: static;
+                display: block;
+            }
+    
+            .labels {
+                display: inline-block;
+                text-align: right;
+                width: 40%;
+                padding: 5px;
+                vertical-align: top;
+                margin-top: 10px;
+            }
+    
+            .fields {
+                display: inline-block;
+                text-align: left;
+                width: 48%;
+                vertical-align: middle;
+            }
+    
+            .input-fields {
+                height: 20px;
+                width: 280px;
+                padding: 5px;
+                margin: 10px;
+                border: 1px solid #c0c0c0;
+                border-radius: 4px;
+            }
+    
+            .dropdown {
+                height: 35px;
+                width: 140px;
+                padding: 5px;
+                margin: 15px 10px 10px 10px;
+                border: 1px solid #c0c0c0;
+                border-radius: 4px;
+            }
+    
+            .radio {
+                position: relative;
+                left: -43px;
+                margin-left: 10px;
+                display: block;
+                padding-bottom: 10px;
+            }
+    
+            .user-selection {
+                float: left;
+                margin-right: 5px;
+            }
+    
+            input[type="radio" i] {
+                background-color: initial;
+                cursor: default;
+                appearance: auto;
+                box-sizing: border-box;
+                margin: 3px 3px 0px 5px;
+                padding: initial;
+                border: initial;
+            }
+    
+            .button {
+                font-size: 1em;
+                background-color: #005091;
+                color: white;
+                border: 0px solid;
+                border-radius: 4px;
+                height: 40px;
+                width: 80px;
+                margin: 10px;
+            }
+            
         </style>
+    
     </head>
+    
     <body>
-        <h2>Survey Form</h2>
-        <div>
-
-            <form>
-                <label for="Name">Name</label>
-                <input type="text" placeholder="Enter your name" name="Name">
-            </form>
+        <div class="startpage">
+            <a href="uebung2.html">Zurueck</a>
         </div>
+        <div id="aeussereBox">
+            <h1>Survey Form</h1>
+            <div id="innereBox">
+                <p id="e1">Let us know how we can improve freeCodeCamp</p>
+    
+                <div class="form-rows">
+                    <div class="labels">
+                    <label for="name" id="name-label">*Name</label>
+                </div>
+                <div class="fields">
+                    <input type="text" id="name" class="input-fields" placeholder="Enter your name" required>
+                </div>
+            </div>
+    
+            <div class="form-rows">
+                <div class="labels">
+                    <label for="email" id="email-label">*Email</label>
+                </div>
+                <div class="fields">
+                    <input type="email" id="email" class="input-fields" placeholder="Enter your Email" required>
+                </div>
+            </div>
+    
+            <div class="form-rows">
+                <div class="labels">
+                    <label for="number" id="number-label">*Age</label>
+                </div>
+                <div class="fields">
+                    <input type="number" id="number" class="input-fields" placeholder="Age" required>
+                </div>
+            </div>
+    
+            <div class="form-rows">
+                <div class="labels" style="padding-top: 12px">
+                    <label for="dropdown" id="dropdown-label">Which option best describes your current role?</label>
+                </div>
+                <div class="fields">
+                    <select name="role"  id="dropdown" class="dropdown">
+                        <option value="Student">Student</option>
+                        <option value="Prof">Prof</option>
+                    </select>
+                </div>
+            </div>
+    
+            <div class="form-rows">
+                <div class="labels">
+                    <label for="recommend">*How likely is that you would recommend freeCodeCamp a friend?</label>
+                </div>
+                <div class="fields">
+                    <ul id="recommend" style="list-style: none;">
+                        <li class="radio">
+                            <label>
+                                Definitely
+                                <input name="recommend-ratio" type="radio" class="user-selection">
+                            </label>
+                        </li>
+                        <li class="radio">
+                            <label>
+                                Maybe
+                                <input name="recommend-ratio" type="radio" class="user-selection">
+                            </label>
+                        </li>
+                        <li class="radio">
+                            <label>
+                                Not sure
+                                <input name="recommend-ratio" type="radio" class="user-selection">
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="form-rows">
+                <div class="labels" style="padding-top: 12px">
+                    <label for="dropdown" id="dropdown-label">What do you like most in FCC:</label>
+                </div>
+                <div class="fields">
+                    <select name="likeMost" id="dropdown" class="dropdown">
+                        <option value="select">Select an option</option>
+                        <option value="a">A</option>
+                        <option value="b">B</option>
+                        <option value="c">C</option>
+                    </select>
+                </div>
+            </div>
+    
+            <div class="form-rows">
+                <div class="labels">
+                    <label for="improve">Things that should be improved in the future <br> (Check all that apply):</label>
+                </div>
+                <div class="fields">
+                    <ul id="improve" style="list-style: none;">
+                        <li class="radio">
+                            <label>
+                                <input name="improve-ratio" type="checkbox" class="user-selection">
+                                Front-end Projects
+                            </label>
+                        </li>
+                        <li class="radio">
+                            <label>
+                                Back-end Projects
+                                <input name="improve-ratio" type="checkbox" class="user-selection">
+                            </label>
+                        </li>
+                        <li class="radio">
+                            <label>
+                                Data Visualization
+                                <input name="improve-ratio" type="checkbox" class="user-selection">
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <button class="button" id="submit" type="submit">Submit</button>
+        </div>
+    </div>
+    
     </body>
-</html>
+    
+    </html>
