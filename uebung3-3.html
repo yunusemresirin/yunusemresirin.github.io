@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                height: 100%;
+                overflow-y: hidden;
+            }
+            
+            * {
+                justify-content: center;
+                font-family:Verdana, Geneva, Tahoma, sans-serif;
+            }
+
+            .main {
+                display: grid;
+                grid-template: 1fr 1fr 62vh 10vh / 1fr 1fr;
+            }
+
+            .nav {
+                grid-column: 1 / 3;
+                display: flex;
+                flex: column nowrap;
+                align-items: center;
+                background-color: black;
+            }
+
+            nav > a {
+                font-family: Arial, Helvetica, sans-serif;
+                padding: 1.675em 1em;
+                color: lightgrey;
+                text-decoration: none;
+            }
+
+            nav > a:hover {
+                background-color: lightslategray;
+            }
+
+            .content {
+                grid-column: 1 / 3;
+                display: flex;
+                flex: row wrap;
+                align-items: flex-start;
+                justify-content: center;
+                background-color: lightgrey;
+            }
+
+            
+            .content-middle-left {
+                display: flex;
+                flex: column nowrap;
+                justify-content: center;
+                align-items: flex-start;
+                background-color: lightgrey;
+                grid-area: 3 / 1 / 4 / 2;
+            }
+            
+            .content-middle-left > img {
+                display: block;
+                width: 500px;
+                border: 1px solid black;
+                border-radius: 1em;
+            }
+            
+            .content-middle-right {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center; 
+                background-color: lightgrey;
+                grid-area: 3 / 2 / 4 / 3;
+                padding-top: 5em;
+            }
+            
+            .content-middle-right > p {
+                margin: 1.5em 0;
+            }
+            
+            .content-middle-right > button {
+                background-color: orange;
+                border: 1px solid orange;
+                color: white;
+                border-radius: 5px;
+                padding: 1em 4em;
+                margin-top: 1em;
+                font-weight: bold;
+            }
+            
+            .content-middle-right > button:hover {
+                cursor: pointer;
+                background-color: rgba(255, 166, 0, 0.8);
+            }
+            
+            .foot {
+                grid-column: 1 / 3;
+                background-color: black;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .foot > p {
+                color: lightgrey;
+            }
+
+            .foot > button {
+                background-color: orange;
+                border: 1px solid orange;
+                color: white;
+                border-radius: 5px;
+                padding: 0.75em 8em;
+                margin: 0 0 0 1em;
+                font-weight: bold;
+            }
+
+            .foot > button:hover {
+                cursor: pointer;
+                background-color: rgba(255, 166, 0, 0.8);
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Oberflaeche -->
+        <div class="main">
+            <!-- Navigationsleiste -->
+            <div class="nav">
+                <nav>
+                    <a href="uebung3.html">Back</a>
+                    <a href="">The book series</a> 
+                    <a href="">Testimonials</a>
+                    <a href="">The Author</a>
+                    <a href="">Free resources</a>
+                </nav>
+            </div>
+
+            <!-- Inhalt -->
+            <div class="content">
+                <h2>You dont know JavaScript</h2>
+            </div>
+            
+            <!-- Inhalt - Mitte - Links -->
+            <div class="content-middle-left">
+                <img alt="JavaScript-Series" src="img/landing-img.png">
+            </div>
+            
+            <!-- Inhalt - Mitte - Rechts -->
+            <div class="content-middle-right">
+                <p>Don't just drift through javaScript.</p>
+                <p>Understand how javascript works</p>
+                <p>Start your journey through the bumpy side of javascript</p>
+                <button>ORDER YOUR COPY NOW</button>
+            </div>
+
+            <!-- Fussnote -->
+            <div class="foot">
+                <p>The first ebook in the book series is absolutely free.</p>
+                <button>FIND OUT MORE ABOUT THIS OFFER</button>
+            </div>
+        </div>
+    </body>
+</html>
