@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="stylesheet.css">
+        <script>
+            // Test-Code
+
+            function identity(parameter) {
+                return parameter
+            }
+
+            function identity_function(parameter) {
+                return (function () {return parameter})
+            }
+
+            var fun = identity_function("hallo")
+            
+            function add(summand1, summand2) {
+                let i = summand2;
+                let z = summand1;
+                while(i > 0) {
+                    z++
+                    i--;
+                }
+                return z
+            }
+
+            function mul(faktor1, faktor2) {
+                let i = faktor2
+                let z = faktor1
+
+                while(i > 1) {
+                    let x = faktor1
+                    while(x > 0) {
+                        z++
+                        x--
+                    }
+                    i--
+                }
+                
+                return z
+            }
+
+            function addf(parameter) {
+                return (function (x) {
+                    return x + parameter
+                })
+            }
+
+            console.log(identity("hallo"))
+            console.log(fun())
+            console.log(add(6,13))
+            console.log(mul(10,8))
+            console.log(addf(10)(5))
+        </script>
+        <style>
+            span {
+                padding: 0px 2px;
+                background-color: rgb(255, 220, 220);
+                color: red;
+            }
+
+            ol li {
+                margin: 5px;
+            }
+
+            pre {
+                display: flex;
+                background-color: rgb(240, 240, 240);
+                border: 1px solid black;
+                border-radius: 1em;
+                width:max-content;
+                padding: 0 15vw 0 0;
+            }
+        </style>
+    </head>
+    <body>
+        <nav><a href="uebung4.html">Zurueck</a></nav>
+
+        <!-- 4.1 -->
+
+        <h3>4.1 Funktionen</h3>
+        <ol>
+            <!-- 4.1.1 -->
+            <li>
+                <p>
+                    Schreiben Sie eine Funktion <span>identity()</span>, die ein Argument 
+                    als Parameter entgegen nimmt und dieses als Ergebnis zurück gibt.
+                </p>
+            </li>
+            <pre>
+                <code>
+                    function identity(parameter) {
+                        return parameter;
+                    }
+                </code>
+            </pre>
+
+            <!-- 4.1.2 -->
+            <li>
+                <p>
+                    Schreiben Sie eine Funktion <span>identity_function()</span>, die ein Argument 
+                    als Parameter entgegen nimmt und eine Funktion zurück gibt, die dieses 
+                    Argument zurück gibt.
+                </p>
+            </li>
+            <pre>
+                <code>
+                    function identity_function(parameter) {
+                        return (function () {return parameter});
+                    }
+                </code>
+            </pre>
+
+            <!-- 4.1.3 -->
+            <li>
+                <p>
+                    Schreiben Sie zwei binäre Funktionen <span>add</span> und <span>mul</span>, 
+                    die Summe und Produkt berechnen.
+                </p>
+            </li>
+            <ul>
+                <li><p><span>add</span><b>:</b></p></li>
+                <pre>
+                    <code>
+                        function add(summand1, summand2) {
+                            let i = summand2;   // must be greater than 0
+                            let z = summand1;
+    
+                            while(i > 0) {
+                                z++
+                                i--;
+                            }
+    
+                            return z;
+                        }
+                    </code>
+                </pre>
+            </ul>
+            <ul>
+                <li><p><span>mul</span><b>:</b></p></li>
+                <pre>
+                    <code>
+                        function mul(faktor1, faktor2) {
+                            // Both variables must be positive and greater than 1
+                            let i = faktor2
+                            let z = faktor1
+            
+                            while(i > 1) {
+                                let x = faktor1
+                                while(x > 0) {
+                                    z++
+                                    x--
+                                }
+                                i--
+                            }
+                            
+                            return z
+                        }
+                    </code>
+                </pre>
+            </ul>
+
+            <!-- 4.1.4 -->
+            <li>
+                Schreiben Sie eine Addier-Funktion <span>addf()</span>, so dass 
+                <span>addf(x)(y)</span> genau <span>x + y</span> zurück gibt. 
+                (Es haben also zwei Funktionsaufrufe zu erfolgen. 
+                <span>addf(x)</span> liefert eine Funktion, die auf <span>y</span> angewandt wird.)
+            </li>  
+            <pre>
+                <code>
+                    function addf(parameter) {
+                        return (function (x) {
+                            return x + parameter
+                        })
+                    }
+                </code>
+            </pre>
+
+            <!-- 4.1.5 -->
+            <li>
+                Schreiben Sie eine Funktion <span>applyf()</span>>, die aus einer binären Funktion 
+                wie <span>add(x,y)</span> eine Funktion <span>addf</span> berechnet, die mit zwei Aufrufen das 
+                gleiche Ergebnis liefert, z.B. <span>addf = applyf(add); addf(x)(y)</span> soll 
+                <span>add(x,y)</span> liefern. Entsprechend <span>applyf(mul)(5)(6)</span> soll 30 liefern, 
+                wenn mul die binäre Multiplikation ist.
+            </li>
+            <pre>
+                <code>
+
+                </code>
+            </pre>
+        </ol>
+    </body>
+</html>

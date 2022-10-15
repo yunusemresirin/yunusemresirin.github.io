@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="stylesheet.css">
+        <script>
+            // class Auto {
+            //     constructor(marke) {
+            //         this.marke;
+            //     }
+            // }
+
+            // class Person {
+            //     constructor(auto) {
+            //         this.auto = auto;
+            //     }
+
+            //     getAuto() {
+            //         return this.auto;
+            //     }
+            // }
+
+            // var amg = new Auto("amg");
+            // var theo = new Person(amg);
+
+            // if( theo.getAuto() === amg ) { console.log(true); }
+            // else { console.log(false); }
+
+            var Person = {
+                autos: [],
+                appendAuto: function(auto) {
+                    this.autos.push(auto)
+                },
+                name: "Max MusterMann",
+
+            }
+
+            function conflict(auto, ...person) {
+                for(var x of person) {
+                    for(var i in person.autos) {
+                        if(i == auto) return true
+                    }
+                }
+                return false
+            }
+
+            Person.appendAuto("AMG")
+            Person.appendAuto("TESLA")
+
+            console.log(conflict("AMG", Person))
+        </script>
+    </head>
+    <body>
+        <nav><a href="uebung4.html">Zurueck</a></nav>
+
+
+    </body>
+</html>
