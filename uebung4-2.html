@@ -3,55 +3,217 @@
     <head>
         <link rel="stylesheet" href="stylesheet.css">
         <script>
-            // class Auto {
-            //     constructor(marke) {
-            //         this.marke;
-            //     }
-            // }
-
-            // class Person {
-            //     constructor(auto) {
-            //         this.auto = auto;
-            //     }
-
-            //     getAuto() {
-            //         return this.auto;
-            //     }
-            // }
-
-            // var amg = new Auto("amg");
-            // var theo = new Person(amg);
-
-            // if( theo.getAuto() === amg ) { console.log(true); }
-            // else { console.log(false); }
+            // Test-Code
 
             var Person = {
-                autos: [],
+                toString: function() {
+                    return "Name: " + this.name + "\n"
+                    + "Autos: " + this.autos
+                },
                 appendAuto: function(auto) {
                     this.autos.push(auto)
-                },
-                name: "Max MusterMann",
-
+                }
             }
 
-            function conflict(auto, ...person) {
-                for(var x of person) {
-                    for(var i in person.autos) {
-                        if(i == auto) return true
+            var Max = {
+                __proto__: Person,
+                autos: [],
+                name: "Max"
+            }
+
+            var Onur = {
+                __proto__: Person,
+                autos: [],
+                name: "Onur"
+            }
+
+            var Yunus = {
+                __proto__: Person,
+                autos: [],
+                name: "Yunus"
+            }
+
+            var Auto = {
+                toString: function() {
+                    return " " + this.marke + " "
+                }
+            }
+
+            var BMW = {
+                __proto__: Auto,
+                marke: "BMW"
+            }
+
+            var Tesla = {
+                __proto__: Auto,
+                marke: "Tesla"
+            }
+
+            var Golf = {
+                __proto__: Auto,
+                marke: "Golf"
+            }
+
+            var Opel = {
+                __proto__: Auto,
+                marke: "Opel"
+            }
+
+            function conflict(auto, ...Personen) {
+                let counter = 0
+                
+                for(let x of Personen) {
+                    for(let c of x.autos) {
+                        if(c === auto) {
+                            counter += 1;
+                        }
                     }
                 }
-                return false
+                
+                // If counter is greater then 1, return true
+                // This implies that the Prototype "auto"
+                // is owned by more than 1 person
+                if(counter > 1) return true
+                
+                return false;
             }
 
-            Person.appendAuto("AMG")
-            Person.appendAuto("TESLA")
+            Max.appendAuto(BMW)
+            Max.appendAuto(Tesla)
 
-            console.log(conflict("AMG", Person))
+            Onur.appendAuto(BMW)
+            Onur.appendAuto(Golf)
+
+            Yunus.appendAuto(Opel) 
+            Yunus.appendAuto(Tesla) 
+
+            console.log(conflict(BMW, Onur, Yunus, Max)) // true because of Onur and Max
+            console.log(conflict(Tesla, Onur, Yunus, Max)) // true because of Yunus and Max
+            console.log(conflict(Opel, Onur, Yunus, Max)) // false
+            console.log(conflict(Golf, Onur, Yunus, Max)) // false
         </script>
+
+        <style>
+            span {
+                padding: 0px 2px;
+                background-color: rgb(255, 220, 220);
+                color: red;
+            }
+
+            ol li {
+                margin: 5px;
+            }
+
+            pre {
+                display: flex;
+                background-color: rgb(240, 240, 240);
+                border: 1px solid black;
+                border-radius: 1em;
+                width:max-content;
+                padding: 0 15vw 0 0;
+            }
+        </style>
     </head>
     <body>
         <nav><a href="uebung4.html">Zurueck</a></nav>
 
+        <h3>4.2. Objekte</h3>
+        <p>
+            Schreiben Sie die Prototypen Person und Auto in JavaScript, 
+            so dass jede Person weiß, welche Autos sie besitzt. Schreiben 
+            Sie eine Funktion <span>conflict()</span>, die feststellt, ob ein Auto von 
+            mehr als einer Person besessen wird.
+        </p>
 
+        <pre>
+            <code>
+                var Person = {
+                    toString: function() {
+                        return "Name: " + this.name + "\n"
+                        + "Autos: " + this.autos
+                    },
+                    appendAuto: function(auto) {
+                        this.autos.push(auto)
+                    }
+                }
+
+                var Max = {
+                    __proto__: Person,
+                    autos: [],
+                    name: "Max"
+                }
+    
+                var Onur = {
+                    __proto__: Person,
+                    autos: [],
+                    name: "Onur"
+                }
+    
+                var Yunus = {
+                    __proto__: Person,
+                    autos: [],
+                    name: "Yunus"
+                }
+
+                var Auto = {
+                    toString: function() {
+                        return " " + this.marke + " "
+                    }
+                }
+
+                var BMW = {
+                    __proto__: Auto,
+                    marke: "BMW"
+                }
+    
+                var Tesla = {
+                    __proto__: Auto,
+                    marke: "Tesla"
+                }
+    
+                var Golf = {
+                    __proto__: Auto,
+                    marke: "Golf"
+                }
+    
+                var Opel = {
+                    __proto__: Auto,
+                    marke: "Opel"
+                }
+
+                function conflict(auto, ...Personen) {
+                    let counter = 0
+                    
+                    for(let x of Personen) {
+                        for(let c of x.autos) {
+                            if(c === auto) {
+                                counter += 1;
+                            }
+                        }
+                    }
+                    
+                    // If the counter is greater then 1, return true
+                    // This implies that the Prototype "auto"
+                    // is owned by more than 1 person
+                    if(counter > 1) return true
+                    
+                    return false;
+                }
+
+                Max.appendAuto(BMW)
+                Max.appendAuto(Tesla)
+    
+                Onur.appendAuto(BMW)
+                Onur.appendAuto(Golf)
+    
+                Yunus.appendAuto(Opel) 
+                Yunus.appendAuto(Tesla) 
+    
+                console.log(conflict(BMW, Onur, Yunus, Max)) // true because of Onur and Max
+                console.log(conflict(Tesla, Onur, Yunus, Max)) // true because of Yunus and Max
+                console.log(conflict(Opel, Onur, Yunus, Max)) // false
+                console.log(conflict(Golf, Onur, Yunus, Max)) // false
+            </code>
+        </pre>
     </body>
 </html>
