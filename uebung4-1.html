@@ -42,16 +42,26 @@
             }
 
             function addf(parameter) {
+                return (function(y) {
+                    return add(parameter, y)
+                })
+            }
+
+            function applyf(fun) {
                 return (function (x) {
-                    return x + parameter
+                    return (function(y) {
+                        return fun(x,y)
+                    })
                 })
             }
 
             console.log(identity("hallo"))
             console.log(fun())
-            console.log(add(6,13))
-            console.log(mul(10,8))
+            console.log(add(10,5))
+            console.log(mul(10,5))
             console.log(addf(10)(5))
+            console.log(applyf(add)(10)(5))
+            console.log(applyf(mul)(10)(5))
         </script>
         <style>
             span {
@@ -171,8 +181,8 @@
             <pre>
                 <code>
                     function addf(parameter) {
-                        return (function (x) {
-                            return x + parameter
+                        return (function(y) {
+                            return add(parameter, y)
                         })
                     }
                 </code>
@@ -180,7 +190,7 @@
 
             <!-- 4.1.5 -->
             <li>
-                Schreiben Sie eine Funktion <span>applyf()</span>>, die aus einer binären Funktion 
+                Schreiben Sie eine Funktion <span>applyf()</span>, die aus einer binären Funktion 
                 wie <span>add(x,y)</span> eine Funktion <span>addf</span> berechnet, die mit zwei Aufrufen das 
                 gleiche Ergebnis liefert, z.B. <span>addf = applyf(add); addf(x)(y)</span> soll 
                 <span>add(x,y)</span> liefern. Entsprechend <span>applyf(mul)(5)(6)</span> soll 30 liefern, 
@@ -188,7 +198,13 @@
             </li>
             <pre>
                 <code>
-
+                    function applyf(fun) {
+                        return (function (x) {
+                            return (function(y) {
+                                return fun(x,y)
+                            })
+                        })
+                    }
                 </code>
             </pre>
         </ol>
