@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="stylesheet.css">
+        <script>
+            function Fibonacci(n) {
+                let f_n = 1
+                let f_n_1 = 1
+                let f_n_backup;
+                
+                for(let x = 1; x <= n; x++) {
+                    if(f_n <= Number.MAX_VALUE) {
+                        console.log(f_n + "##" + x)
+                    }
+                    
+                    if(x > 1) {
+                        f_n_backup = f_n;
+                        
+                        f_n = f_n + f_n_1
+                        
+                        f_n_1 = f_n_backup
+                    }
+                }
+
+                // Number.MAX_SAFE_INTEGER -> 9007199254740991
+                // Number.MAX_INTEGER -> 1.7976931348623157e+308
+                // BigInt.MAX_VALUE -> undefined
+
+                // return f_n
+            }
+
+            Fibonacci(2000)
+
+            // console.log(Fibonacci(1475))
+        </script>
+        <style>
+            span {
+            padding: 0px 2px;
+            background-color: rgb(255, 220, 220);
+            color: red;
+            }
+
+            ol li {
+                margin: 5px;
+            }
+
+            pre {
+                display: flex;
+                background-color: rgb(240, 240, 240);
+                border: 1px solid black;
+                border-radius: 1em;
+                width: max-content;
+                padding: 0 15vw 0 0;
+            }
+        </style>
+    </head>
+    <body>
+        <nav><a href="uebung4.html">Zurueck</a></nav>
+        
+        <h3>4.3 Fibonacci</h3>
+        <p>Die Fibonacci-Funktion ist folgendermaßen implementiert: </p>
+        <pre>
+            <code>
+                function Fibonacci(n) {
+                    let f_n = 1
+                    let f_n_1 = 1
+                    let f_n_backup;
+                    
+                    for(let x = 1; x <= n; x++) {
+                        console.log(f_n)
+                        if(x > 1) {
+                            f_n_backup = f_n;
+                            
+                            f_n = f_n + f_n_1
+                            
+                            f_n_1 = f_n_backup
+                        }
+                    }
+    
+                    // return f_n -> um die letzte Ziffer auszugeben
+                }
+            </code>
+        </pre>
+        <p>Daraus lässt sich schlussfolgern, dass</p>
+        <ul>
+            <li>bei <span>Integer</span> die letzte große Ziffer die 78. Ziffer mit <span>8944394323791464</span> ist, da es kleiner <span>Number.MAX_SAFE_INTEGER = 9007199254740991</span> ist.</li>
+            <li>bei <span>Number</span> die letzte große Ziffer die 1476. Ziffer mit <span>1.3069892237633987e+308</span> ist, da es kleiner <span>Number.MAX_VALUE = 1.7976931348623157e+308</span> ist.</li>
+            <li>bei <span>BigInt</span> die <q>größte Ziffer</q> <span>Infinity</span> ist.</li>
+        </ul>
+    </body>
+</html>
