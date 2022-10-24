@@ -9,8 +9,8 @@
                 let f_n_backup;
                 
                 for(let x = 1; x <= n; x++) {
-                    if(f_n <= Number.MAX_VALUE) {
-                        console.log(f_n + "##" + x)
+                    if(f_n <= Number.MAX_SAFE_INTEGER) {
+                        console.log(f_n + "--" + x)
                     }
                     
                     if(x > 1) {

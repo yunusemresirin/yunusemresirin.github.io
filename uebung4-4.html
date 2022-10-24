@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="stylesheet.css">
+        <script>
+            var array2 = [["essen","studieren"], ["schlafen", "studieren"], ["studieren", "pruefen"]]
+
+            function topsort_eingehende(array) {
+                let arrlength = 0;
+                let value = null;
+                let eingehende = [];
+                let eingehende_counter = [];
+                let value_list = []
+                let index_one = 0;
+                
+                while( index_one < array.length ) {
+                    
+                    while( value === null || 
+                            value_list.includes(value) ) {
+                        
+                        let index_two = array[index_one].length-1 // 1
+                        
+                        value = array[index_one][index_two];
+                        
+                        index_one++;
+                    }
+                    
+                    let counter = 0;
+                    
+                    for( let x of array ) {
+                    // Wenn wir davon ausgehen, dass die Arrays jeweils nur zwei Elemente haben
+                    if( value === x[1] ) {
+                            counter++;
+                    }
+                    
+                    }
+                    
+                    value_list.push(value);        
+                    eingehende.push(value);
+                    eingehende_counter.push(counter)
+                    
+                    // break;
+                }
+                
+                console.log(eingehende_counter.toString())
+                
+                return eingehende;
+            }
+
+            console.log(topsort_eingehende(array2))
+        </script>
+        <style>
+            span {
+            padding: 0px 2px;
+            background-color: rgb(255, 220, 220);
+            color: red;
+            }
+
+            ol li {
+                margin: 5px;
+            }
+
+            pre {
+                display: flex;
+                background-color: rgb(240, 240, 240);
+                border: 1px solid black;
+                border-radius: 1em;
+                width: max-content;
+                padding: 0 15vw 0 0;
+            }
+        </style>
+    </head>
+    <body>
+        <nav><a href="uebung4.html">Zurueck</a></nav>
+
+        <h3>4.4 TopSort</h3>
+    </body>
+</html>

@@ -33,6 +33,12 @@
                 name: "Yunus"
             }
 
+            var Fabio = {
+                __proto__: Person,
+                autos: [],
+                name: "Fabio"
+            }
+
             var Auto = {
                 toString: function() {
                     return " " + this.marke + " "
@@ -73,7 +79,7 @@
                 // If counter is greater then 1, return true
                 // This implies that the Prototype "auto"
                 // is owned by more than 1 person
-                if(counter > 1) return true
+                if(counter > 1) return true;
                 
                 return false;
             }
