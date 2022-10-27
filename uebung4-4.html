@@ -25,29 +25,101 @@
                         index_one++;
                     }
                     
-                    let counter = 0;
+                    let counter_with_val = []
+                    let counter = [];
                     
                     for( let x of array ) {
                     // Wenn wir davon ausgehen, dass die Arrays jeweils nur zwei Elemente haben
-                    if( value === x[1] ) {
-                            counter++;
-                    }
+                        if( value === x[1] ) {
+                                counter.push(x[0]);
+                        }
                     
                     }
                     
-                    value_list.push(value);        
-                    eingehende.push(value);
-                    eingehende_counter.push(counter)
+                    counter_with_val.push( counter )
+                    counter_with_val.push( value )
+                    
+                    value_list.push(value)        
+                    eingehende.push(value)
+                    
+                    
+                    eingehende_counter.push(counter_with_val)
                     
                     // break;
                 }
                 
-                console.log(eingehende_counter.toString())
-                
-                return eingehende;
+                return eingehende_counter;
             }
 
-            console.log(topsort_eingehende(array2))
+            function topsort_ausgehende(array) {
+                let value = null;
+                let ausgehende = [];
+                let ausgehende_counter = [];
+                let value_list = []
+                let index_one = 0;
+
+                while( index_one < array.length ) {
+                    
+                    while( value === null || 
+                            value_list.includes(value) ) {
+                        
+                        let index_two = 0 // 1
+                        
+                        value = array[index_one][index_two];
+                        
+                        index_one++;
+                    }
+                    
+                    let counter_with_val = []
+                    let counter = [];
+                    
+                    for( let x of array ) {
+                    // Wenn wir davon ausgehen, dass die Arrays jeweils nur zwei Elemente haben
+                        if( value === x[0] ) {
+                                counter.push(x[1]);
+                        }
+                    
+                    }
+                    
+                    counter_with_val.push( value )
+                    counter_with_val.push( counter )
+                    
+                    value_list.push(value);        
+                    ausgehende.push(value);
+                    
+                    ausgehende_counter.push(counter_with_val)
+                    
+                    // break;
+                }
+
+                return ausgehende_counter;
+            }
+
+            function topsort_array( array ) {
+                let eingehende_kanten_liste = topsort_eingehende(array)
+                let ausgehende_kanten_liste = topsort_ausgehende(array)
+                
+                let liste = []
+                
+                for( let x of ausgehende_kanten_liste ) {
+                    let val = x[0]
+                    
+                    for( let y of eingehende_kanten_liste ) {
+                        
+                        if( y[1] === val ) {
+                            
+                            y.push( x[1] )
+                            
+                        }
+                        
+                    }
+                    
+                }
+                
+                return eingehende_kanten_liste;
+            }
+
+            console.log(topsort_array(array2))
         </script>
         <style>
             span {
