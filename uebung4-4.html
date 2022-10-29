@@ -151,7 +151,11 @@
                         topsort_liste.push(tmpArr)
                     }
                 }
-                
+
+                for( let val of topsort_liste ) {
+                    if(val.length < 3) val.push([])        
+                }
+
                 return topsort_liste;
             }
 
