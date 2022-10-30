@@ -3,7 +3,9 @@
     <head>
         <link rel="stylesheet" href="stylesheet.css">
         <script>
-            var array2 = [["essen","studieren"], ["schlafen", "studieren"], ["studieren", "pruefen"], ["studieren", "trinken"], ["trinken", "schnupfen"]]
+            var test_array = [["essen","studieren"], ["schlafen", "studieren"], ["studieren", "pruefen"]]
+
+            // Funktioniert bisher nur fuer ein Array mit ungerader Anzahl an Elementen
 
             function values( array ) {
                 let arrval = []
@@ -142,7 +144,7 @@
                         let tmpArr = []
                         tmpArr.push( [] )
                         ausgehende_kanten_liste.forEach((val) => {
-                            if( val.includes(x) ) {
+                            if( val.includes( x ) ) {
                                 tmpArr.push(val[0])
                                 tmpArr.push(val[1])
                             }
@@ -151,16 +153,53 @@
                         topsort_liste.push(tmpArr)
                     }
                 }
-
+                
                 for( let val of topsort_liste ) {
                     if(val.length < 3) val.push([])        
                 }
-
+                
                 return topsort_liste;
             }
 
-            console.log(topsort_array(array2))
-            // console.log(values(array2))
+            function topsort( array ) {
+                let topsort_liste = topsort_array( array )
+                let sortierte_liste = []    
+                let sorted = false
+                
+                while( !sorted ) {
+                    let val_index = null
+                    let val_array = null
+                    let val_array_ausgehende = null
+                    
+                    topsort_liste.forEach( (value, index) => {
+                        if( value[0].length === 0 ) {
+                            sortierte_liste.push( value[1] )
+                            
+                            val_index = index
+                            val_array = value[1]
+                            val_array_ausgehende = value[2]
+                        }
+                    } )
+                    
+                    topsort_liste.splice(val_index, 1)
+                    
+                    for( let v of val_array_ausgehende ) {
+                        topsort_liste.forEach( (value, index) => {
+                            if( value.includes( v ) ) {
+                                value[0] = value[0].filter( val_filter => 
+                                    val_filter != val_array
+                                )
+                            }
+                        } )    
+                    }
+                    
+                    if( topsort_liste.length === 0 ) sorted = true
+                }
+                
+                return sortierte_liste
+            }
+
+            console.log( topsort( test_array ) )
         </script>
         <style>
             span {
