@@ -167,17 +167,22 @@
                 let sorted = false
                 
                 while( !sorted ) {
+                    let shouldSkip = false
                     let val_index = null
                     let val_array = null
                     let val_array_ausgehende = null
                     
                     topsort_liste.forEach( (value, index) => {
+                        if( shouldSkip ) return
+                            
                         if( value[0].length === 0 ) {
                             sortierte_liste.push( value[1] )
                             
                             val_index = index
                             val_array = value[1]
                             val_array_ausgehende = value[2]
+                            
+                            shouldSkip = true
                         }
                     } )
                     
@@ -226,5 +231,212 @@
         <nav><a href="uebung4.html">Zurueck</a></nav>
 
         <h3>4.4 TopSort</h3>
+        <p>Schreiben Sie die Funktion <span>topsort</span>:</p>
+        <pre>
+            <code>
+                var test_array = [["essen","studieren"], ["schlafen", "studieren"], ["studieren", "pruefen"]]
+
+                // Funktioniert bisher nur fuer ein Array mit ungerader Anzahl an Elementen
+    
+                function values( array ) {
+                    let arrval = []
+                    
+                    for( let x of array ) {
+                        if( !arrval.includes(x[0]) )
+                            arrval.push( x[0] )        
+                    }
+                    
+                    for( let y of array ) {
+                        if( !arrval.includes(y[1]) ) {
+                            arrval.push( y[1] )       
+                        }
+                    }
+                    
+                    return arrval
+                }
+    
+                function topsort_eingehende(array) {
+                    let arrlength = 0;
+                    let value = null;
+                    let eingehende = [];
+                    let eingehende_counter = [];
+                    let value_list = []
+                    let index_one = 0;
+                    
+                    while( index_one < array.length ) {
+                        
+                        while( value === null || 
+                                value_list.includes(value) ) {
+                            
+                            let index_two = array[index_one].length-1 // 1
+                            
+                            value = array[index_one][index_two];
+                            
+                            index_one++;
+                        }
+                        
+                        let counter_with_val = []
+                        let counter = [];
+                        
+                        for( let x of array ) {
+                        // Wenn wir davon ausgehen, dass die Arrays jeweils nur zwei Elemente haben
+                            if( value === x[1] ) {
+                                    counter.push(x[0]);
+                            }
+                        
+                        }
+                        
+                        counter_with_val.push( counter )
+                        counter_with_val.push( value )
+                        
+                        value_list.push(value)        
+                        eingehende.push(value)
+                        
+                        
+                        eingehende_counter.push(counter_with_val)
+                        
+                        // break;
+                    }
+                    
+                    return eingehende_counter;
+                }
+    
+                function topsort_ausgehende(array) {
+                    let value = null;
+                    let ausgehende = [];
+                    let ausgehende_counter = [];
+                    let value_list = []
+                    let index_one = 0;
+    
+                    while( index_one < array.length ) {
+                        
+                        while( value === null || 
+                                value_list.includes(value) ) {
+                            
+                            let index_two = 0 // 1
+                            
+                            value = array[index_one][index_two];
+                            
+                            index_one++;
+                        }
+                        
+                        let counter_with_val = []
+                        let counter = [];
+                        
+                        for( let x of array ) {
+                        // Wenn wir davon ausgehen, dass die Arrays jeweils nur zwei Elemente haben
+                            if( value === x[0] ) {
+                                    counter.push(x[1]);
+                            }
+                        
+                        }
+                        
+                        counter_with_val.push( value )
+                        counter_with_val.push( counter )
+                        
+                        value_list.push(value);        
+                        ausgehende.push(value);
+                        
+                        ausgehende_counter.push(counter_with_val)
+                        
+                        // break;
+                    }
+    
+                    return ausgehende_counter;
+                }
+    
+                function topsort_array( array ) {
+                    let eingehende_kanten_liste = topsort_eingehende(array)
+                    let ausgehende_kanten_liste = topsort_ausgehende(array)
+                    let arrval = values(array)
+                    
+                    let topsort_liste = Object.values(eingehende_kanten_liste);
+                    
+                    for( let x of ausgehende_kanten_liste ) {
+                        let val = x[0]
+                        
+                        for( let y of topsort_liste ) {
+                            if( y[1] === val ) {
+                                y.push( x[1] )
+                            }
+                        }
+                    }
+                    
+                    let inArray = false
+                    
+                    for( let x of arrval ) {
+                        for( let arr of topsort_liste ) {
+                            if( arr.includes( x ) ) {
+                                inArray = true
+                            }
+                        }
+                        
+                        if( !inArray ) {
+                            let tmpArr = []
+                            tmpArr.push( [] )
+                            ausgehende_kanten_liste.forEach((val) => {
+                                if( val.includes( x ) ) {
+                                    tmpArr.push(val[0])
+                                    tmpArr.push(val[1])
+                                }
+                            })
+                            
+                            topsort_liste.push(tmpArr)
+                        }
+                    }
+                    
+                    for( let val of topsort_liste ) {
+                        if(val.length < 3) val.push([])        
+                    }
+                    
+                    return topsort_liste;
+                }
+    
+                function topsort( array ) {
+                    let topsort_liste = topsort_array( array )
+                    let sortierte_liste = []    
+                    let sorted = false
+                    
+                    while( !sorted ) {
+                        let shouldSkip = false
+                        let val_index = null
+                        let val_array = null
+                        let val_array_ausgehende = null
+                        
+                        topsort_liste.forEach( (value, index) => {
+                            if( shouldSkip ) return
+                                
+                            if( value[0].length === 0 ) {
+                                sortierte_liste.push( value[1] )
+                                
+                                val_index = index
+                                val_array = value[1]
+                                val_array_ausgehende = value[2]
+                                
+                                shouldSkip = true
+                            }
+                        } )
+                        
+                        topsort_liste.splice(val_index, 1)
+                        
+                        for( let v of val_array_ausgehende ) {
+                            topsort_liste.forEach( (value, index) => {
+                                if( value.includes( v ) ) {
+                                    value[0] = value[0].filter( val_filter => 
+                                        val_filter != val_array
+                                    )
+                                }
+                            } )    
+                        }
+                        
+                        if( topsort_liste.length === 0 ) sorted = true
+                    }
+                    
+                    return sortierte_liste
+                }
+    
+                console.log( topsort( test_array ) ) // => [ 'essen', 'schlafen', 'studieren', 'pruefen' ]
+            </code>
+        </pre>
     </body>
 </html>
