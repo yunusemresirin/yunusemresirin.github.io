@@ -434,8 +434,24 @@
                     
                     return sortierte_liste
                 }
-    
-                console.log( topsort( test_array ) ) // => [ 'essen', 'schlafen', 'studieren', 'pruefen' ]
+
+                test_array_sortiert = topsort( test_array )
+
+                werte = values( test_array )
+                
+                console.log( test_array_sortiert ) // => [ 'essen', 'schlafen', 'studieren', 'pruefen' ]
+                
+                test_array_sortiert.forEach( value => {
+                    let hasValue = false;
+                
+                    for( let v of werte ) {
+                        if( v === value ) {
+                            hasValue = true
+                            break
+                        }        
+                    }
+                        console.assert( hasValue, 'Werte stimmen nicht ueberein' )
+                } )
             </code>
         </pre>
     </body>
