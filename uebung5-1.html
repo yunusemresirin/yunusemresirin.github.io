@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="stylesheet.css">
+        <style>
+            table {
+                border: solid 1px black;
+                padding: 1em;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <a href="uebung5.html">Zurueck</a>
+        </nav>
+
+        <table>
+            <tr>
+                <th>Vergleich</th>
+                <th>Messzeit</th>
+            </tr>
+
+            <tr>
+                <td><p id="innerHTMLtest"></p></td>
+                <td><p id="innerHTML"></p></td>
+            </tr>
+
+            <tr>
+                <td><p id="innerTexttest"></p></td>
+                <td><p id="innerText"></p></td>
+            </tr>
+
+            <tr>
+                <td><p id="innerContenttest"></p></td>
+                <td><p id="innerContent"></p></td>
+            </tr>
+
+            <tr>
+                <td><p id="outerHTMLtest"></p></td>
+                <td><p id="outerHTML"></p></td>
+            </tr>
+        </table>
+
+        <script>
+            // Test-Funktionen
+            function innerHTMLtest() {
+                let innerhtmlstart = performance.now()
+                document.getElementById("innerHTMLtest").innerHTML="moin"
+                return performance.now() - innerhtmlstart
+            }
+            
+            function innerTexttest() {
+                let innertextstart = performance.now()
+                document.getElementById("innerTexttest").innerText="moin"
+                return performance.now() - innertextstart
+            }
+            
+            function innerContenttest() {
+                let innercontentstart = performance.now()
+                document.getElementById("innerContenttest").innerContent="<td><p id=\'testText\'></p></td>"
+                return performance.now() - innercontentstart
+            }
+            
+            function outerHTMLtest() {
+                let outerhtmlstart = performance.now()
+                document.getElementById("outerHTMLtest").innerText="<td><p id=\'testText\'></p></td>"
+                return performance.now() - outerhtmlstart
+            }
+
+            function testVersuch(func) {
+                let summe = 0
+
+                // Warmlauf
+                for( let i = 0; i < 100; i++ ) {
+                    func()
+                }
+
+                for( let i = 0; i < 1000; i++ ) {
+                    summe += func()
+                }
+
+                return summe/(1000)
+            }
+
+            document.getElementById("innerHTML").innerHTML=testVersuch(() => innerHTMLtest())
+            document.getElementById("innerText").innerHTML=testVersuch(() => innerTexttest())
+            document.getElementById("innerContent").innerHTML=testVersuch(() => innerContenttest())
+            document.getElementById("outerHTML").innerHTML=testVersuch(() => outerHTMLtest())
+
+            document.getElementById("innerHTMLtest").innerText="innerHTML"
+            document.getElementById("innerTexttest").innerText="innerText"
+            // document.getElementById("innerContenttest").innerText="innerContent"
+            document.getElementById("outerHTMLtest").innerText="outerHTML"
+        </script>
+    </body>
+</html>
