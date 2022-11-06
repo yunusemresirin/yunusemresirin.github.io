@@ -3,6 +3,9 @@
     <head>
         <link rel="stylesheet" href="stylesheet.css">
         <style>
+            li button {
+                margin-left: 0.5em;
+            }
         </style>
     </head>
     <body>
@@ -11,10 +14,10 @@
         </nav>
 
         <h2>Rednerliste</h2>
-        <form>
+        <form autocomplete="on">
             <label for="redner_name">Neuer Redner: </label>
             <input type="text" id="redner_name" name="redner_name" placeholder="Rednername" required>
-            <button type="button" onclick="addRedner()">Hinzufügen</button>
+            <button type="button" onclick="addRedner()" id="add_button">Hinzufügen</button>
         </form>
 
         <ul id="redner_liste">
@@ -22,19 +25,42 @@
         </ul>
 
         <script>
-            const redner_liste = document.getElementById("redner_liste");
-            const text_val = document.getElementById("redner_name");
+            const redner_liste = document.getElementById("redner_liste")
+            const text_val = document.getElementById("redner_name")
+            const add_button = document.getElementById("add_button")
+
+            var redner_array = []
+
+            function onlySpaces(str) {
+                return str.trim().length === 0
+            }
+
+            text_val.oninput = () => {
+                for( let txt_val of redner_array ) {
+                    if(txt_val === text_val.value) {
+                        add_button.disabled = true
+                    } else {
+                        add_button.disabled = false
+                    }
+                }
+            }
 
             function addRedner() {
-                let list_node = document.createElement("li")
-                let text_node = document.createTextNode( text_val.value )
-
-                let button = document.createElement("button")
-                button.innerText = "Start!"
-
-                list_node.appendChild(text_node)
-                list_node.appendChild(button)
-                redner_liste.appendChild(list_node)
+                if(text_val.value && !onlySpaces(text_val.value)) {
+                    let list_node = document.createElement("li")
+                    let text_node = document.createTextNode( text_val.value )
+    
+                    let button = document.createElement("button")
+                    button.innerText = "Start!"
+    
+                    list_node.appendChild(text_node)
+                    list_node.appendChild(button)
+                    redner_liste.appendChild(list_node)
+    
+                    redner_array.push( text_val.value )
+    
+                    text_val.value = ""
+                }
             }
         </script>
     </body>
