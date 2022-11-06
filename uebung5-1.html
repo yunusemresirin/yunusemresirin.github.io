@@ -51,56 +51,58 @@
         </table>
 
         <script>
-
-            // Test-Funktionen
-            function innerHTMLtest() {
-                let innerhtmlstart = performance.now()
-                document.getElementById("innerHTMLtest").innerHTML="moin"
-                return performance.now() - innerhtmlstart
-            }
-            
-            function innerTexttest() {
-                let innertextstart = performance.now()
-                document.getElementById("innerTexttest").innerText="moin"
-                return performance.now() - innertextstart
-            }
-            
-            function innerContenttest() {
-                let innercontentstart = performance.now()
-                document.getElementById("innerContenttest").innerContent="<td><p id=\'testText\'></p></td>"
-                return performance.now() - innercontentstart
-            }
-            
-            function outerHTMLtest() {
-                let outerhtmlstart = performance.now();
-                document.getElementById("outerHTMLtest").innerHTML="<td><p id=\'testText\'></p></td>";
-                return performance.now() - outerhtmlstart;
-            }
-
-            function testVersuch(func) {
-                let summe = 0
-
-                // Warmlauf
-                for( let i = 0; i < 100; i++ ) {
-                    func()
+            window.onload = (event) => {
+                // Test-Funktionen
+                function innerHTMLtest() {
+                    let innerhtmlstart = performance.now()
+                    document.getElementById("innerHTMLtest").innerHTML="moin"
+                    return performance.now() - innerhtmlstart
                 }
-
-                for( let i = 0; i < 1000; i++ ) {
-                    summe += func()
+                
+                function innerTexttest() {
+                    let innertextstart = performance.now()
+                    document.getElementById("innerTexttest").innerText="moin"
+                    return performance.now() - innertextstart
                 }
-
-                return summe/(1000)
-            }
-
-            document.getElementById("innerHTML").innerHTML=testVersuch(() => innerHTMLtest())
-            document.getElementById("innerText").innerHTML=testVersuch(() => innerTexttest())
-            document.getElementById("innerContent").innerHTML=testVersuch(() => innerContenttest())
-            document.getElementById("outerHTML").innerHTML=testVersuch(() => outerHTMLtest())
-
-            document.getElementById("innerHTMLtest").innerText="innerHTML"
-            document.getElementById("innerTexttest").innerText="innerText"
-            document.getElementById("innerContenttest").innerText="innerContent"
-            document.getElementById("outerHTMLtest").innerText="outerHTML"
+                
+                function innerContenttest() {
+                    let innercontentstart = performance.now()
+                    document.getElementById("innerContenttest").innerContent="<td><p id=\'testText\'></p></td>"
+                    return performance.now() - innercontentstart
+                }
+                
+                function outerHTMLtest() {
+                    let outerhtmlstart = performance.now();
+                    // .outerHTML is null/undefined ?
+                    document.getElementById("outerHTMLtest").innerHTML="<td><p id=\'testText\'></p></td>";
+                    return performance.now() - outerhtmlstart;
+                }
+    
+                function testVersuch(func) {
+                    let summe = 0
+    
+                    // Warmlauf
+                    for( let i = 0; i < 100; i++ ) {
+                        func()
+                    }
+    
+                    for( let i = 0; i < 1000; i++ ) {
+                        summe += func()
+                    }
+    
+                    return summe/(1000)
+                }
+    
+                document.getElementById("innerHTML").innerHTML=testVersuch(() => innerHTMLtest())
+                document.getElementById("innerText").innerHTML=testVersuch(() => innerTexttest())
+                document.getElementById("innerContent").innerHTML=testVersuch(() => innerContenttest())
+                document.getElementById("outerHTML").innerHTML=testVersuch(() => outerHTMLtest())
+    
+                document.getElementById("innerHTMLtest").innerText="innerHTML"
+                document.getElementById("innerTexttest").innerText="innerText"
+                document.getElementById("innerContenttest").innerText="innerContent"
+                document.getElementById("outerHTMLtest").innerText="outerHTML"
+            };
         </script>
     </body>
 </html>
