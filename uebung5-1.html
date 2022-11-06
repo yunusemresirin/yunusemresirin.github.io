@@ -51,6 +51,7 @@
         </table>
 
         <script>
+
             // Test-Funktionen
             function innerHTMLtest() {
                 let innerhtmlstart = performance.now()
@@ -71,9 +72,9 @@
             }
             
             function outerHTMLtest() {
-                let outerhtmlstart = performance.now()
-                document.getElementById("outerHTMLtest").innerText="<td><p id=\'testText\'></p></td>"
-                return performance.now() - outerhtmlstart
+                let outerhtmlstart = performance.now();
+                document.getElementById("outerHTMLtest").innerHTML="<td><p id=\'testText\'></p></td>";
+                return performance.now() - outerhtmlstart;
             }
 
             function testVersuch(func) {
