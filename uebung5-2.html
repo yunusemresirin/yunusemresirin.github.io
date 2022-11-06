@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="stylesheet.css">
+        <style>
+        </style>
+    </head>
+    <body>
+        <nav>
+            <a href="uebung5.html">Zurueck</a>
+        </nav>
+
+        <h2>Rednerliste</h2>
+        <form>
+            <label for="redner_name">Neuer Redner: </label>
+            <input type="text" id="redner_name" name="redner_name" placeholder="Rednername" required>
+            <button type="button" onclick="addRedner()">Hinzufügen</button>
+        </form>
+
+        <ul id="redner_liste">
+
+        </ul>
+
+        <script>
+            const redner_liste = document.getElementById("redner_liste");
+            const text_val = document.getElementById("redner_name");
+
+            function addRedner() {
+                let list_node = document.createElement("li")
+                let text_node = document.createTextNode( text_val.value )
+
+                let button = document.createElement("button")
+                button.innerText = "Start!"
+
+                list_node.appendChild(text_node)
+                list_node.appendChild(button)
+                redner_liste.appendChild(list_node)
+            }
+        </script>
+    </body>
+</html>
