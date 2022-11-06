@@ -6,6 +6,10 @@
             li button {
                 margin-left: 0.5em;
             }
+
+            li {
+                margin: 0.5em;
+            }
         </style>
     </head>
     <body>
@@ -35,15 +39,27 @@
                 return str.trim().length === 0
             }
 
+            function hasValue(str) {
+                return str === text_val.value.trim()
+            }
+
             text_val.oninput = () => {
                 for( let txt_val of redner_array ) {
-                    if(txt_val === text_val.value) {
+                    if(hasValue(txt_val)) {
                         add_button.disabled = true
                     } else {
                         add_button.disabled = false
                     }
                 }
             }
+
+            text_val.addEventListener("keypress", (event) => {
+                if(event.key === "Enter") {
+                    event.preventDefault();
+
+                    add_button.click()
+                }
+            })
 
             function addRedner() {
                 if(text_val.value && !onlySpaces(text_val.value)) {
@@ -62,6 +78,19 @@
                     text_val.value = ""
                 }
             }
+
+            // Timer-Function
+            function timerFun() {
+                let start = Date.now()
+                
+                setInterval(event => {
+                    let time = Date.now() - start
+
+                    console.log(time/1000)
+                }, 1000)
+            }
+
+            timerFun()
         </script>
     </body>
 </html>
