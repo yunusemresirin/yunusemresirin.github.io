@@ -10,6 +10,10 @@
             li {
                 margin: 0.5em;
             }
+
+            li span {
+                margin: 0 0 0 0.4em;
+            }
         </style>
     </head>
     <body>
@@ -47,6 +51,7 @@
                 for( let txt_val of redner_array ) {
                     if(hasValue(txt_val)) {
                         add_button.disabled = true
+                        break;
                     } else {
                         add_button.disabled = false
                     }
@@ -61,36 +66,59 @@
                 }
             })
 
+            var index = 0;
+
             function addRedner() {
                 if(text_val.value && !onlySpaces(text_val.value)) {
-                    let list_node = document.createElement("li")
-                    let text_node = document.createTextNode( text_val.value )
+                    let list_node = document.createElement("li");
+                    let text_node = document.createTextNode( text_val.value );
+
+                    let timer = document.createElement("span");
+                    timer.innerText = '00:00:00'
+                    let timer_index = 'timer_' + index;
+                    timer.setAttribute("id", timer_index);
+
+                    let button = document.createElement("button");
+                    button.innerText = "Start!";
     
-                    let button = document.createElement("button")
-                    button.innerText = "Start!"
+                    button.addEventListener("click", () => {
+                        if(button.innerText === "Stop!") {
+                            button.innerText = "Start!"
+
+                        } else {
+                            button.innerText = "Stop!"
+                            timerFun(timer)
+                        }
+                    });
+
+                    list_node.appendChild(text_node);
+
+                    list_node.appendChild(timer);
+
+                    list_node.appendChild(button);
+                    redner_liste.appendChild(list_node);
     
-                    list_node.appendChild(text_node)
-                    list_node.appendChild(button)
-                    redner_liste.appendChild(list_node)
+                    redner_array.push( text_val.value );
     
-                    redner_array.push( text_val.value )
-    
-                    text_val.value = ""
+                    text_val.value = "";
+                    index += 1;
                 }
             }
 
             // Timer-Function
-            function timerFun() {
-                let start = Date.now()
+            function timerFun(timer) {
+                let start = new Date()
                 
                 setInterval(event => {
-                    let time = Date.now() - start
+                    // let h = start.getHours()
+                    // let m = start.getMinutes()
+                    // let s = start.getSeconds()
 
-                    console.log(time/1000)
+                    timer.innerText = start.toLocaleTimeString()
                 }, 1000)
             }
 
-            timerFun()
+            // timerFun()
         </script>
     </body>
 </html>
