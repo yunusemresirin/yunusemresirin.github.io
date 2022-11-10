@@ -22,6 +22,8 @@
         </nav>
 
         <h2>Rednerliste</h2>
+        <div id="test-div"></div>
+
         <form autocomplete="on">
             <label for="redner_name">Neuer Redner: </label>
             <input type="text" id="redner_name" name="redner_name" placeholder="Rednername" required>
@@ -107,18 +109,20 @@
 
             // Timer-Function
             function timerFun(timer) {
-                let start = new Date()
-                
                 setInterval(event => {
-                    // let h = start.getHours()
-                    // let m = start.getMinutes()
-                    // let s = start.getSeconds()
+                    let start = new Date()
 
-                    timer.innerText = start.toLocaleTimeString()
+                    timer.innerHTML = start.toLocaleTimeString()
                 }, 1000)
             }
 
             // timerFun()
+
+            //var test_div = document.getElementById("test-div")
+            //setInterval(event => {
+            //    test_div.innerHTML = index
+            //    index += 0
+            // }, 1000)
         </script>
     </body>
 </html>
