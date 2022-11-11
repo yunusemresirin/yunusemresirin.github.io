@@ -69,6 +69,7 @@
             })
 
             var index = 0;
+            var buttons = []
 
             function addRedner() {
                 if(text_val.value && !onlySpaces(text_val.value)) {
@@ -82,14 +83,24 @@
 
                     let button = document.createElement("button");
                     button.innerText = "Start!";
-    
+                    button.withTimerText = timer
+                    button.withTimerText.h = 0
+                    button.withTimerText.m = 0
+                    button.withTimerText.s = 0
+
                     button.addEventListener("click", () => {
                         if(button.innerText === "Stop!") {
+                            timerFun(button)
                             button.innerText = "Start!"
-
                         } else {
+                            buttons.forEach((element) => {
+                                if(element.innerText === "Stop!") {
+                                    element.click()
+                                }
+                            })
+
+                            timerFun(button)
                             button.innerText = "Stop!"
-                            timerFun(timer)
                         }
                     });
 
@@ -103,26 +114,38 @@
                     redner_array.push( text_val.value );
     
                     text_val.value = "";
+                    button.click();
+                    buttons.push(button)
                     index += 1;
                 }
             }
 
             // Timer-Function
-            function timerFun(timer) {
-                setInterval(event => {
+            function timerFun(button) {
+                if( button.innerText === "Start!" ) {
                     let start = new Date()
-
-                    timer.innerHTML = start.toLocaleTimeString()
-                }, 1000)
+                    
+                    button.withTimer = setInterval(event => {
+                        let diff = new Date()
+    
+                        let h = diff.getHours()-start.getHours() + button.withTimerText.h
+                        let m = diff.getMinutes()-start.getMinutes() + button.withTimerText.m
+                        let s = diff.getSeconds()-start.getSeconds() + button.withTimerText.s
+    
+                        h_changed = h < 10 ? '0' + h : h
+                        m_changed = m < 10 ? '0' + m : m
+                        s_changed = s < 10 ? '0' + s : s
+    
+                        button.withTimerText.innerHTML = h_changed + ':' + m_changed + ':' + s_changed
+                        button.withTimerText.times = [h, m, s]
+                    }, 1000)
+                } else {
+                    button.withTimerText.h = button.withTimerText.times[0]
+                    button.withTimerText.m = button.withTimerText.times[1]
+                    button.withTimerText.s = button.withTimerText.times[2]
+                    clearInterval(button.withTimer)
+                }
             }
-
-            // timerFun()
-
-            //var test_div = document.getElementById("test-div")
-            //setInterval(event => {
-            //    test_div.innerHTML = index
-            //    index += 0
-            // }, 1000)
         </script>
     </body>
 </html>
