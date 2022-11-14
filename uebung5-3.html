@@ -6,20 +6,25 @@
         <style>
             #console_space {
                 display: grid;
-                border: solid 1px black;
                 margin: 1em;
-                height: 10em;
-                grid: 5em 5em / 1fr;
+                height: 15em;
+                grid: 1fr 1fr / 1fr;
             }
             
             #console_space div {
                 padding: 0.2em 0 0 0.5em;
                 border: solid 1px black;
+                border-radius: 1em;
+                margin: 1em;
             }
 
             #warning {
                 color: red;
                 font-weight: 900;
+            }
+
+            #input_form {
+                margin: 0 0 0 2em;
             }
         </style>
     </head>
@@ -28,12 +33,10 @@
             <a href="solutions.html">Zurueck</a>
         </nav>
 
-        <form>
-            <label for="wert">Wert:</label>
-            <input type="text" id="wert" name="wert">
-            <label for="nachfolger">Nachfolger:</label>
-            <input type="text" id="nachfolger" name="nachfolger">
-            <button id="add_button">Add</button>
+        <form id="input_form">
+            <input type="text" id="wert" name="wert" placeholder="Wert">
+            <input type="text" id="nachfolger" name="nachfolger" placeholder="Nachfolger">
+            <button id="add_button">Add binary relation</button>
             <span id="warning"></span>
         </form>
 
