@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="stylesheet.css">
+        <style>
+            span {
+            padding: 0px 2px;
+            background-color: rgb(255, 220, 220);
+            color: red;
+            }
+
+            ol li {
+                margin: 5px;
+            }
+
+            pre {
+                display: flex;
+                background-color: rgb(240, 240, 240);
+                border: 1px solid black;
+                border-radius: 1em;
+                width: max-content;
+                padding: 0 15vw 0 0;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <a href="solutions.html">Zurueck</a>
+        </nav>
+
+        <h3>6.5 deepCopy</h3>
+        <p>Funktion <span>deepCopy</span>:</p>
+        <pre>
+            <code>
+                class Vorrang {
+                    constructor( list, log = true ) {
+                      this._predecessors = {};
+                      const all = new Set();
+                      for ( const [ pre, post ] of list ){
+                        all.add( pre ); all.add( post );
+                        if ( ! this._predecessors[ post ] ) this._predecessors[ post ] = [];
+                        this._predecessors[ post ].push( pre );
+                      }
+                      this._max = all.size;
+                      all.forEach( item => {
+                        if ( ! this._predecessors[ item ] ) this._predecessors[ item ] = [];
+                      })
+                      if ( log ) this._predecessors = new Proxy( this._predecessors, this.logger() )
+                    }
+                    logger() {
+                      const that = this;
+                      return {
+                        get( target, prop, receiver ) {
+                          const count = Object.keys( that._predecessors ).length;
+                          console.log( `COUNT ${prop} ${count}` );
+                          console.assert( count > 0 && count <= that._max, count );
+                          return target[ prop ]
+                        },
+                        has(target, prop) {
+                          console.log( "HAS " + prop );
+                          return prop in target;
+                        }
+                      }
+                    }
+                    predecessors( item ){
+                      return this._predecessors[ item ];
+                    }
+                    * [Symbol.iterator]() {
+                      while ( Object.keys( this._predecessors ).length > 0 ){
+                        const find = Object.entries( this._predecessors )
+                        .find( ([ item, pres ]) => pres.length === 0 );
+                        const next = find[ 0 ];
+                        delete this._predecessors[ next ];
+                        for ( const [ item, pres ] of Object.entries( this._predecessors ) ){
+                          this._predecessors[ item ] = pres.filter( x => x !== next );
+                        }
+                        yield next;
+                      }
+                    }
+                  }
+                  
+                  const studentenLeben = new Vorrang([ ["schlafen", "studieren"], ["essen", "studieren"], ["studieren", "prüfen"] ]);
+                  console.assert( studentenLeben.predecessors( "studieren" ).includes( "schlafen" ) );
+                  console.assert( studentenLeben.predecessors( "studieren" ).includes( "essen" ) );
+                  
+                  const reihenfolge = [...studentenLeben];
+                  console.assert( reihenfolge[0] === "schlafen" );
+                  console.assert( reihenfolge[1] === "essen" );
+                  console.assert( reihenfolge[2] === "studieren" );
+                  console.assert( reihenfolge[3] === "prüfen" );
+            </code>
+        </pre>
+        <script>
+            const x = { a: 1, b: 2, c: [ { d: 3 }, 4 ] };
+
+            const deepCopy = ( structure ) =>
+            Array.isArray( structure ) ? structure.map( item => deepCopy( item ) ) :
+                typeof structure === "object" && structure !== null ? Object.fromEntries( Object.entries( structure ).map( ([key, value]) => [ key, deepCopy( value ) ] ) ) :
+                structure;
+
+            const y = deepCopy(x);
+
+            console.log(x)
+            console.log(y)
+
+            // https://stackoverflow.com/questions/39682676/creating-a-deepequal-function-in-javascript
+            var deepEqual = function(obj1, obj2) {
+                // if they reference the same object in memory, then they are the same
+                if (obj1 === obj2) {
+                    return true; 
+                }
+
+                if (Array.isArray(obj1) && Array.isArray(obj2) &&
+                    obj1.length === obj2.length) {
+                    for (var i = 0; i < obj1.length; i++) {
+                    if (!deepEqual(obj1[i], obj2[i])) {
+                        return false;
+                    }
+                    }
+                }
+
+                // if they don't have the same length, then not equivalent
+                if ( Object.keys(obj1).length !== Object.keys(obj2).length) {
+                    return false;
+                }
+
+                // if they don't have the same properties, then not equivalent
+                for (var key in obj1) {
+                    if (!(key in obj2) || !deepEqual(obj1[key], obj2[key])) { // line 24
+                    return false;
+                    }
+                }
+
+                return true;
+            }
+
+            console.assert(deepEqual(x,y), "Da stimmt was nicht!")
+        </script>
+     </body>
+</html>
