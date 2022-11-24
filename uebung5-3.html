@@ -30,8 +30,10 @@
     </head>
     <body>
         <nav>
-            <a href="solutions.html">Zurueck</a>
+            <a href="uebung5.html">Zurueck</a>
         </nav>
+
+        <h3>5.3 TopSort als Web-App</h3>
 
         <form id="input_form">
             <input type="text" id="wert" name="wert" placeholder="Wert">
@@ -86,7 +88,7 @@
 
             function topsort(binary_relations) {
                 var value_list = values(binary_relations)
-                var inDegree = calulate_inDegree(binary_relations, value_list)
+                var inDegree = calculate_inDegree(binary_relations, value_list)
                 console.log(inDegree);
                 var next = [];
                 var sortierte_liste = [];
@@ -126,7 +128,7 @@
 
             // Zu dem entsprechenden Eintrag ermitteln wir die Nachfolger als auch den Grad, 
             // wie viele Vorgaenger dieser hat.
-            function calulate_inDegree(relationen, elements) {
+            function calculate_inDegree(relationen, elements) {
                 // Anlegen eines Objekt-Arrays, nach dem Key-Value-Prinzip
                 var inDegree = {};
                 elements.forEach(item => {

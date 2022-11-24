@@ -25,116 +25,231 @@
     </head>
     <body>
         <nav>
-            <a href="solutions.html">Zurueck</a>
+            <a href="uebung6.html">Zurueck</a>
         </nav>
 
-        <h3>6.5 deepCopy</h3>
-        <p>Funktion <span>deepCopy</span>:</p>
+        <h3>6.3 Proxy</h3>
+        <p>Klasse <span>Vorrang</span> inklusive <span>Proxy</span></p>
         <pre>
             <code>
                 class Vorrang {
-                    constructor( list, log = true ) {
-                      this._predecessors = {};
-                      const all = new Set();
-                      for ( const [ pre, post ] of list ){
-                        all.add( pre ); all.add( post );
-                        if ( ! this._predecessors[ post ] ) this._predecessors[ post ] = [];
-                        this._predecessors[ post ].push( pre );
-                      }
-                      this._max = all.size;
-                      all.forEach( item => {
-                        if ( ! this._predecessors[ item ] ) this._predecessors[ item ] = [];
-                      })
-                      if ( log ) this._predecessors = new Proxy( this._predecessors, this.logger() )
+                    constructor(binary_relations, proxy = true) {
+                        this.binary_relations = binary_relations;
+                        this.eingehende = getEingehende( binary_relations )
+    
+                        if( proxy ) this.eingehende = new Proxy( this.eingehende, this.logger() )
                     }
+                    
+                    setBinaryRelationsAsSorted(binary_relations) {
+                        this.sortedBinaryRelations = topsort(this.binary_relations);
+                    }
+    
+                    getTopSort() {
+                        return topsort(this.binary_relations)
+                    }
+    
                     logger() {
-                      const that = this;
-                      return {
-                        get( target, prop, receiver ) {
-                          const count = Object.keys( that._predecessors ).length;
-                          console.log( `COUNT ${prop} ${count}` );
-                          console.assert( count > 0 && count <= that._max, count );
-                          return target[ prop ]
-                        },
-                        has(target, prop) {
-                          console.log( "HAS " + prop );
-                          return prop in target;
+                        const that = this;
+    
+                        return {
+                            get( target, prop, receiver ) {
+                                const counter = Object.keys( this.eingehende ).length;
+    
+                                console.assert( counter > 0 && counter <= that._max, counter );
+    
+                                return target[ prop ]
+                            },
+    
+                            has( target, prop ) {
+                                console.log( "HAS " + prop );
+                                return prop in target;
+                            }
+    
                         }
-                      }
                     }
-                    predecessors( item ){
-                      return this._predecessors[ item ];
-                    }
+    
                     * [Symbol.iterator]() {
-                      while ( Object.keys( this._predecessors ).length > 0 ){
-                        const find = Object.entries( this._predecessors )
-                        .find( ([ item, pres ]) => pres.length === 0 );
-                        const next = find[ 0 ];
-                        delete this._predecessors[ next ];
-                        for ( const [ item, pres ] of Object.entries( this._predecessors ) ){
-                          this._predecessors[ item ] = pres.filter( x => x !== next );
+                        let top_arr = this.getTopSort()
+                        while(top_arr.length) {
+                            yield top_arr.shift()
                         }
-                        yield next;
-                      }
                     }
-                  }
-                  
-                  const studentenLeben = new Vorrang([ ["schlafen", "studieren"], ["essen", "studieren"], ["studieren", "prüfen"] ]);
-                  console.assert( studentenLeben.predecessors( "studieren" ).includes( "schlafen" ) );
-                  console.assert( studentenLeben.predecessors( "studieren" ).includes( "essen" ) );
-                  
-                  const reihenfolge = [...studentenLeben];
-                  console.assert( reihenfolge[0] === "schlafen" );
-                  console.assert( reihenfolge[1] === "essen" );
-                  console.assert( reihenfolge[2] === "studieren" );
-                  console.assert( reihenfolge[3] === "prüfen" );
+                }
+    
+                function getEingehende(binary_relations) {
+                    let eingehende = {}
+    
+                    for ( const [ pre, post ] of binary_relations ) {
+                        if ( ! eingehende[ post ] ) eingehende[ post ] = [];
+    
+                        eingehende[ post ].push( pre );
+                    }
+    
+                    return eingehende;
+                }
             </code>
         </pre>
         <script>
-            const x = { a: 1, b: 2, c: [ { d: 3 }, 4 ] };
+            function topsort(binary_relations) {
+                var value_list = values(binary_relations)
+                var inDegree = calculate_inDegree(binary_relations, value_list)
+                var next = [];
+                var sortierte_liste = [];
 
-            const deepCopy = ( structure ) =>
-            Array.isArray( structure ) ? structure.map( item => deepCopy( item ) ) :
-                typeof structure === "object" && structure !== null ? Object.fromEntries( Object.entries( structure ).map( ([key, value]) => [ key, deepCopy( value ) ] ) ) :
-                structure;
-
-            const y = deepCopy(x);
-
-            console.log(x)
-            console.log(y)
-
-            // https://stackoverflow.com/questions/39682676/creating-a-deepequal-function-in-javascript
-            var deepEqual = function(obj1, obj2) {
-                // if they reference the same object in memory, then they are the same
-                if (obj1 === obj2) {
-                    return true; 
-                }
-
-                if (Array.isArray(obj1) && Array.isArray(obj2) &&
-                    obj1.length === obj2.length) {
-                    for (var i = 0; i < obj1.length; i++) {
-                    if (!deepEqual(obj1[i], obj2[i])) {
-                        return false;
-                    }
+                for (key in inDegree) {
+                    if (inDegree[key].degree === 0) {
+                        next.push(key);
                     }
                 }
 
-                // if they don't have the same length, then not equivalent
-                if ( Object.keys(obj1).length !== Object.keys(obj2).length) {
-                    return false;
+                var k = 1;
+
+                if (next.length === 0) {
+                    return -2;
                 }
 
-                // if they don't have the same properties, then not equivalent
-                for (var key in obj1) {
-                    if (!(key in obj2) || !deepEqual(obj1[key], obj2[key])) { // line 24
-                    return false;
-                    }
-                }
+                do {
+                    var current_item = next.pop();
+                    sortierte_liste.push(current_item);
+                    k += 1;
+                    inDegree[current_item].nachfolger.forEach(function (item) {
+                        if (inDegree[item].degree > 1) {
+                            inDegree[item].degree -= 1;
+                        } else {
+                            next.push(item);
+                        }
+                    })
+                } while (next.length !== 0);
 
-                return true;
+                if (k !== value_list.length + 1) {
+                    return -1;
+                }
+                
+                return sortierte_liste;
             }
 
-            console.assert(deepEqual(x,y), "Da stimmt was nicht!")
+            // Zu dem entsprechenden Eintrag ermitteln wir die Nachfolger als auch den Grad, 
+            // wie viele Vorgaenger dieser hat.
+            function calculate_inDegree(relationen, elements) {
+                // Anlegen eines Objekt-Arrays, nach dem Key-Value-Prinzip
+                var inDegree = {};
+                elements.forEach(item => {
+                    inDegree[item] = { name: item, degree: 0, nachfolger: [] };
+                })
+
+                relationen.forEach(items => {
+                    inDegree[items[1]].degree += 1;
+                    if (!inDegree[items[0]].nachfolger.includes(items[1])) {
+                        inDegree[items[0]].nachfolger.push(items[1]);
+                    }
+                })
+                return inDegree;
+            }
+
+            // Aus den binaeren Relationen eine Liste erzeugen, die
+            // die Werte genau einmal enthaelt
+            function values( array ) {
+                let arrval = []
+                
+                for( let x of array ) {
+                    if( !arrval.includes(x[0]) )
+                        arrval.push( x[0] )        
+                }
+                
+                for( let y of array ) {
+                    if( !arrval.includes(y[1]) ) {
+                        arrval.push( y[1] )       
+                    }
+                }
+                
+                return arrval
+            }
+
+            class Vorrang {
+                constructor(binary_relations, proxy = true) {
+                    this.binary_relations = binary_relations;
+                    this.eingehende = getEingehende( binary_relations )
+                    this.anzahlElemente = countElements( binary_relations )
+
+                    if( proxy ) this.eingehende = new Proxy( this.eingehende, this.logger() )
+                }
+                
+                setBinaryRelationsAsSorted(binary_relations) {
+                    this.sortedBinaryRelations = topsort(this.binary_relations);
+                }
+
+                getTopSort() {
+                    return topsort(this.binary_relations)
+                }
+
+                logger() {
+                    const that = this;
+
+                    return {
+                        get( target, prop, receiver ) {
+                            const counter = Object.keys( this.eingehende ).length;
+
+                            console.assert( counter > 0 && counter <= that.anzahlElemente, counter );
+
+                            return target[ prop ]
+                        },
+
+                        has( target, prop ) {
+                            console.log( "HAS " + prop );
+                            return prop in target;
+                        }
+
+                    }
+                }
+
+                * [Symbol.iterator]() {
+                    let top_arr = this.getTopSort()
+                    while(top_arr.length) {
+                        yield top_arr.shift()
+                    }
+                }
+            }
+
+            function getEingehende(binary_relations) {
+                let eingehende = {}
+
+                for ( const [ pre, post ] of binary_relations ) {
+                    if ( ! eingehende[ post ] ) eingehende[ post ] = [];
+
+                    eingehende[ post ].push( pre );
+                }
+
+                return eingehende;
+            }
+
+            function countElements(binary_relations) {
+                let counter = 0
+
+                binary_relations.forEach((relation) => {
+                    for( let value of relation ) {
+                        counter++;
+                    }
+                })
+
+                return counter;
+            }
+
+             // Test
+             const studentenLeben = new Vorrang( [
+                [ "schlafen", "studieren" ],
+                [ "essen", "studieren" ],
+                [ "studieren", "prüfen" ]
+                ] )
+
+            const topsort_studentenleben = topsort( studentenLeben["binary_relations"] )
+
+            let i = 0;
+
+            for ( let next of studentenLeben ) {
+                console.log(`Testdurchlauf: ${i + 1}`)
+                console.log(next)
+                console.assert( next === topsort_studentenleben[i++], "Etwas ist schief gelaufen!" );
+            }
         </script>
      </body>
 </html>

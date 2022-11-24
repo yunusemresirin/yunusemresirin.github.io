@@ -21,6 +21,29 @@
                 width: max-content;
                 padding: 0 15vw 0 0;
             }
+
+            #console_space {
+                display: grid;
+                margin: 1em;
+                height: 15em;
+                grid: 1fr 1fr / 1fr;
+            }
+            
+            #console_space div {
+                padding: 0.2em 0 0 0.5em;
+                border: solid 1px black;
+                border-radius: 1em;
+                margin: 1em;
+            }
+
+            #warning {
+                color: red;
+                font-weight: 900;
+            }
+
+            #input_form {
+                margin: 0 0 0 2em;
+            }
         </style>
     </head>
     <body>
@@ -73,98 +96,147 @@
                 }
             </code>
         </pre>
+        <h4>Testmodell:</h4>
+        <form id="input_form">
+            <input type="text" id="wert" name="wert" placeholder="Wert">
+            <input type="text" id="nachfolger" name="nachfolger" placeholder="Nachfolger">
+            <button id="add_button">Add binary relation</button>
+            <button id="calculate_relations">Calculate</button>
+            <button id="clear">Clear</button>
+        </form>
+
+        <p id="warning" style="text-indent: 2.0em;"></p>
+
+        <div id="console_space">
+            <div id="binaer_relations_console">
+                Binary Relations
+                <p id="binary_relations"></p>
+            </div>
+            <div id="topsort_console">
+                Topsort
+                <p id="topsort_array"></p>
+            </div>
+        </div>
 
         <script>
-            // Um das Modul importieren zu koennen, muss man ueber das Terminal den http-server starten (npm install --global http-server) dann (http-server)
-            // import { topsort } from './modules/topsort.mjs';
+            var binary_relations = []
+            var relations_ausgabe = document.getElementById("binary_relations")
+            var topsort_ausgabe = document.getElementById("topsort_array")
+            var add_button = document.getElementById("add_button")
+            var calculate_button = document.getElementById("calculate_relations")
+            var nachfolger = document.getElementById("nachfolger")
+            var warning = document.getElementById("warning")
+            var wert = document.getElementById("wert")
+            var vorrang = null;
+
+            function setUpBinaryRelation() {
+                if( vorrang === null ) {
+                    vorrang = new Vorrang()
+                }
+
+                let values = [wert.value, nachfolger.value]
+                binary_relations.push(values)
+                
+                relations_ausgabe.innerText += "(" + wert.value + "," + nachfolger.value + "),"
+
+                wert.value = ""
+                nachfolger.value = ""
+
+                vorrang.setBinaryRelationsAsSorted(binary_relations);
+            }
 
             function topsort(binary_relations) {
-                var value_list = values(binary_relations);
-                var inDegree = calulate_inDegree(binary_relations, value_list);
+                var value_list = values(binary_relations)
+                var inDegree = calculate_inDegree(binary_relations, value_list)
                 var next = [];
                 var sortierte_liste = [];
 
                 for (key in inDegree) {
-                if (inDegree[key].degree === 0) {
-                    next.push(key);
-                }
+                    if (inDegree[key].degree === 0) {
+                        next.push(key);
+                    }
                 }
 
                 var k = 1;
 
                 if (next.length === 0) {
-                return -2;
+                    return -2;
                 }
 
                 do {
-                var current_item = next.pop();
-                sortierte_liste.push(current_item);
-                k += 1;
-                inDegree[current_item].nachfolger.forEach(function (item) {
-                    if (inDegree[item].degree > 1) {
-                        inDegree[item].degree -= 1;
-                    } else {
-                        next.push(item);
-                    }
-                })
+                    var current_item = next.pop();
+                    sortierte_liste.push(current_item);
+                    k += 1;
+                    inDegree[current_item].nachfolger.forEach(function (item) {
+                        if (inDegree[item].degree > 1) {
+                            inDegree[item].degree -= 1;
+                        } else {
+                            next.push(item);
+                        }
+                    })
                 } while (next.length !== 0);
 
                 if (k !== value_list.length + 1) {
-                return -1;
+                    return -1;
                 }
-
-                return sortierte_liste;
+                
+                return sortierte_liste
             }
 
             // Zu dem entsprechenden Eintrag ermitteln wir die Nachfolger als auch den Grad, 
             // wie viele Vorgaenger dieser hat.
-            function calulate_inDegree(relationen, elements) {
-            // Anlegen eines Objekt-Arrays, nach dem Key-Value-Prinzip
-            var inDegree = {};
-            elements.forEach(item => {
-            inDegree[item] = { name: item, degree: 0, nachfolger: [] };
-            })
+            function calculate_inDegree(relationen, elements) {
+                // Anlegen eines Objekt-Arrays, nach dem Key-Value-Prinzip
+                var inDegree = {};
+                elements.forEach(item => {
+                    inDegree[item] = { name: item, degree: 0, nachfolger: [] };
+                })
 
-            relationen.forEach(items => {
-            inDegree[items[1]].degree += 1;
-            if (!inDegree[items[0]].nachfolger.includes(items[1])) {
-                inDegree[items[0]].nachfolger.push(items[1]);
-            }
-            })
-            return inDegree;
+                relationen.forEach(items => {
+                    inDegree[items[1]].degree += 1;
+                    if (!inDegree[items[0]].nachfolger.includes(items[1])) {
+                        inDegree[items[0]].nachfolger.push(items[1]);
+                    }
+                })
+                return inDegree;
             }
 
             // Aus den binaeren Relationen eine Liste erzeugen, die
             // die Werte genau einmal enthaelt
             function values( array ) {
-            let arrval = []
-
-            for( let x of array ) {
-            if( !arrval.includes(x[0]) )
-                arrval.push( x[0] )        
-            }
-
-            for( let y of array ) {
-            if( !arrval.includes(y[1]) ) {
-                arrval.push( y[1] )       
-            }
-            }
-
-            return arrval
+                let arrval = []
+                
+                for( let x of array ) {
+                    if( !arrval.includes(x[0]) )
+                        arrval.push( x[0] )        
+                }
+                
+                for( let y of array ) {
+                    if( !arrval.includes(y[1]) ) {
+                        arrval.push( y[1] )       
+                    }
+                }
+                
+                return arrval
             }
 
             class Vorrang {
                 constructor(binary_relations) {
                     this.binary_relations = binary_relations;
                 }
+                
+                setBinaryRelationsAsSorted(binary_relations) {
+                    this.binary_relations = binary_relations;
+                }
 
-                getTopSortArray() {
-                    return topsort( this.binary_relations );
+                getTopSort() {
+                    return topsort(this.binary_relations)
                 }
 
                 [Symbol.iterator]() {
-                    const props = this.getTopSortArray();
+                    let props = this.getTopSort();
                     let i = 0;
+                    
                     return {
                         next() {
                             return {
@@ -176,6 +248,29 @@
                 }
             }
 
+            add_button.addEventListener("click", (event) => {
+                event.preventDefault()
+
+                if(nachfolger.value.trim() === "" || wert.value.trim() === "") {
+                    warning.innerText = "Please insert valid values"
+                } else {
+                    warning.innerText = ""
+                    setUpBinaryRelation()
+                }
+            })
+
+            calculate_button.addEventListener("click", (event) => {
+                event.preventDefault()
+
+                if( vorrang != null ) {
+                    topsort_ausgabe.innerText = ''
+
+                    for( let val of vorrang ) {
+                        topsort_ausgabe.innerText += `${val},`
+                    }
+                }
+            })
+
             // Test
             const studentenLeben = new Vorrang( [
                 [ "schlafen", "studieren" ],
@@ -184,11 +279,14 @@
                 ] )
 
             const topsort_studentenleben = topsort( studentenLeben["binary_relations"] )
+            console.log( studentenLeben["binary_relations"] )
+            console.log( topsort_studentenleben )
 
             let i = 0;
 
             for ( let next of studentenLeben ) {
                 console.log(`Testdurchlauf: ${i + 1}`)
+                console.log(next)
                 console.assert( next === topsort_studentenleben[i++], "Etwas ist schief gelaufen!" );
             }
         </script>
