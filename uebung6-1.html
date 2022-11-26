@@ -2,41 +2,37 @@
 <html>
     <head>
         <link rel="stylesheet" href="stylesheet.css">
+        <style>
+            root {
+                --color--input: rgb(0,0,0);
+            }
+        </style>
     </head>
     <body>
         <nav>
             <a href="uebung6.html">Zurueck</a>
         </nav>
 
+        <h3>6.1 Klammerpaare</h3>
+        <form>
+            <label for="input">Geben Sie bitte eine beliebige <b>Zeichenkette</b> mit beliebig vielen <b>Klammerpaaren</b> hier ein:</label>
+            <input type="text" id="inputField" placeholder="Zeichenkette" oninput="checkInput()">
+        </form>
+
         <script>
-            class Vorrang {
-                constructor( list ) {
-                    this.eingehende = {};
-                    const allvalues = new Set();
+            var input = document.getElementById('inputField');
 
-                    for ( const [vor, nach] of list ) {
-                        allvalues.add(vor);
-                        allvalues.add(nach);
-                        if ( ! this.eingehende[nach] ) this.eingehende[ nach ] = [];
-                        this.eingehende[nach].push(vor);
-                    }
+            function checkInput() {
+                event.preventDefault();
 
-                    allvalues.forEach( item => {
-                        if ( ! this.eingehende[item] ) this.eingehende[ item ] = [];
-                    });
-                }
-
-                getEingehende( item ){
-                    return this.eingehende[ item ];
-                }
-
+                let valid = isValid( input.value );
+                input.style.background = !valid ? 'rgb(255, 200, 200)' : 'white';
+                input.style.color = !valid ? 'red' : 'green';
             }
 
-            const studentenLeben = new Vorrang([ ["schlafen", "studieren"], ["essen", "studieren"], ["studieren", "prüfen"] ]);
-            console.assert( studentenLeben.getEingehende( "studieren" ).includes( "schlafen" ) );
-            console.assert( studentenLeben.getEingehende( "studieren" ).includes( "essen" ) );
-
-            console.log(studentenLeben.getEingehende( "studieren" ))
+            function isValid( value ) {
+                return value === 'valid' ? false : true;
+            }
         </script>
     </body>
 </html>
