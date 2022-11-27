@@ -26,12 +26,48 @@
                 event.preventDefault();
 
                 let valid = isValid( input.value );
-                input.style.background = !valid ? 'rgb(255, 200, 200)' : 'white';
+                input.style.background = !valid ? 'rgb(255, 215, 215)' : 'white';
                 input.style.color = !valid ? 'red' : 'green';
             }
 
             function isValid( value ) {
-                return value === 'valid' ? false : true;
+                let c_l = 0, c_r = 0; // Curled Braces
+                let a_l = 0, a_r = 0; // Array Brackets
+                let t_l = 0, t_r = 0; // Parentheses
+
+                for( let [index, char] of [...value].entries() ) {
+                    switch (char) {
+                        case '{':
+                            [...value].slice(index+1).reverse().forEach((c) => { if(c === '{' && c_l > c_r) return false })
+                            c_l++;
+                            break;
+                        case '[': 
+
+                            a_l++;
+                            break;
+                        case '(': 
+
+                            t_l++;
+                            break;
+                        case '}': 
+
+                            c_r++;
+                            break;
+                        case ']': 
+
+                            a_r++;
+                            break;
+                        case ')': 
+                            
+                            t_r++;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                return c_l === c_r & a_l === a_r & t_l === t_r;
+                // return value === 'valid' ? false : true;
             }
         </script>
     </body>
