@@ -35,30 +35,47 @@
                 let a_l = 0, a_r = 0; // Array Brackets
                 let t_l = 0, t_r = 0; // Parentheses
 
+                let additionalCheck = true;
+
                 for( let [index, char] of [...value].entries() ) {
                     switch (char) {
                         case '{':
-                            [...value].slice(index+1).reverse().forEach((c) => { if(c === '{' && c_l > c_r) return false })
                             c_l++;
+                            // [...value].slice(index+1).reverse().forEach((c) => { additionalCheck = c === '{' && c_l >= c_r })
                             break;
                         case '[': 
-
                             a_l++;
+                            // [...value].slice(index+1).reverse().forEach((c) => { additionalCheck = c === '[' && a_l >= a_r })
                             break;
                         case '(': 
-
                             t_l++;
+                            // [...value].slice(index+1).reverse().forEach((c) => { additionalCheck = c === '[' && t_l >= t_r })
                             break;
                         case '}': 
-
                             c_r++;
+                            // [...value].slice(0, index+1).forEach((c) => {
+                            //     let count = 0 
+                            //     count = c === '{' ? count++ : count;
+
+                            //     additionalCheck = count < c_r;
+                            // })
                             break;
                         case ']': 
-
                             a_r++;
+                            // [...value].slice(0, index+1).forEach((c) => {
+                            //     let count = 0 
+                            //     count = c === '{' ? count++ : count;
+
+                            //     additionalCheck = count < a_r;
+                            // })
                             break;
                         case ')': 
-                            
+                            // [...value].slice(0, index+1).forEach((c) => {
+                            //     let count = 0 
+                            //     count = c === '{' ? count++ : count;
+
+                            //     additionalCheck = count < t_r;
+                            // })
                             t_r++;
                             break;
                         default:
@@ -66,7 +83,7 @@
                     }
                 }
 
-                return c_l === c_r & a_l === a_r & t_l === t_r;
+                return c_l === c_r & a_l === a_r & t_l === t_r & additionalCheck;
                 // return value === 'valid' ? false : true;
             }
         </script>

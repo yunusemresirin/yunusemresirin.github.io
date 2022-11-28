@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="stylesheet.css">
+        <style>
+            span {
+            padding: 0px 2px;
+            background-color: rgb(255, 220, 220);
+            color: red;
+            }
+
+            ul li {
+                margin: 5px;
+            }
+
+            pre {
+                display: flex;
+                background-color: rgb(240, 240, 240);
+                border: 1px solid black;
+                border-radius: 1em;
+                width: max-content;
+                padding: 0 15vw 0 0;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <a href="uebung7.html">Zurueck</a>
+        </nav>
+
+        <h3>7.1 Funktionen in JavaScript</h3>
+        <ul>
+            <li><span>identity_function</span>: Eine Funktion, die einen Parameter entgegennimmt und eine Funktionen ausgibt, die dieses Argument liefert</li>
+            <pre>
+                <code>
+    function identity_function(x) {
+        return function() {
+            return x;
+        }
+    }
+                </code>
+            </pre>
+            <li><span>addf</span>: Die Funktion nimmt <b>einzeln</b> mehrere Argumente entgegen und liefert das erwartete Ergebnis</li>
+            <pre>
+                <code>
+    function addf(x) {
+        return function(y) {
+            return x+y;
+        }
+    }
+                </code>
+            </pre>
+            <li><span>applyf</span>: Es sollen beliebig Funktionen gesetzt werden, sodass das gewünschte Ergebnis geliefert wird</li>
+            <pre>
+                <code>
+    function applyf(fun) {
+        return fun
+    }
+                </code>
+            </pre>
+            <li><span>curry</span>: Nimmt eine binäre Funktion und ein Argument entgegen, um daraus eine Funktion zu erzeugen, die ein zweites Argument entgegennimmt.</li>
+            <pre>
+                <code>
+    function curry(fun, x) {
+        return fun(x);
+    }
+                </code>
+            </pre>
+            <li><span>inc</span>: Die Funktion setzt sich zusammen aus eines der drei Funktionen <span>addf, applyf</span> und/oder <span>curry</span></li>
+            <pre>
+                <code>
+    let inc = null;
+    inc = addf(1)
+    inc(x) // → 1 + x
+
+    inc = applyf(addf)(1)
+    inc(x) // → 1 + x
+
+    inc = curry(addf, 1)
+    inc(x) // → 1 + x
+                </code>
+            </pre>
+            <li><span>methodize</span>: Wandelt eine binäre Funktion in eine unäre Methode umwandelt</li>
+            <pre>
+                <code>
+    function methodize(fun) {
+        // Curry-Function takes a binary function and one argument, 
+        // then it gives out another function, which takes another argument (Watch above ↑)
+        return curry(fun, this.valueOf());
+    }
+                </code>
+            </pre>
+            <li><span>demethodize</span>: Wandelt eine unäre Methode in eine binäre Funktion um</li>
+            <pre>
+                <code>
+    function demethodize(fun) {
+        return function(x, y) {
+            return (x).fun(y)
+        }
+    }
+                </code>
+            </pre>
+            <li><span>twice</span>: Wandelt eine binäre Funktion in eine unäre Funktion, die wiederum den einen Parameter zweimal weiter reicht</li>
+            <pre>
+                <code>
+    function twice(fun) {
+        return function(x) {
+            return fun(x, x)
+        }
+    }
+                </code>
+            </pre>
+        </ul>
+    </body>
+</html>
