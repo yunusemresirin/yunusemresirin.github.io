@@ -62,7 +62,9 @@
             <pre>
                 <code>
     function curry(fun, x) {
-        return fun(x);
+        return (y) => {
+            return fun(x, y);
+        };
     }
                 </code>
             </pre>
@@ -110,6 +112,58 @@
     }
                 </code>
             </pre>
+            <li><span>composeu</span>: Transformiert zwei unäre Funktionen in eine unäre Funktion</li>
+            <pre>
+                <code>
+    function composeu(fun1, fun2) {
+        return (x) => {
+            return fun2(fun1(x));
+        }
+    }
+                </code>
+            </pre>
+            <li><span>composeb</span>: Wandelt zwei binäre Funktionen in eine einzelne Funktion</li>
+            <pre>
+                <code>
+    function composeb(fun1, fun2) {
+        return function(x, y, z) {
+            return fun2(fun1(x, y), z);
+        }
+    }
+                </code>
+            </pre>
+            <li><span>once</span>: Erlaubt einer Funktion einmal nur aufgerufen zu werden</li>
+            <pre>
+                <code>
+    function once(fun) {
+        let count = 0;
+        return function(x, y) {
+            if(count++ > 0) throw new Error('Die Funktion wurde schon einmal aufgerufen')
+            
+            return fun(x, y);
+        }
+    }
+                </code>
+            </pre>
+            <li><span>counterf</span>: Eine Fabrik-Funktion, die zwei Funktionen berechnet, die einen Zähler hoch- und herunter
+            zähle</li>
+            <pre>
+                <code>
+    function counterf(x) {
+        return {
+            number: x,
+            inc() {
+                return ++this.number
+            },
+            dec() {
+                return --this.number
+            }
+        }
+    }
+                </code>
+            </pre>
+            <li><span>revocable</span>: Eine rücknehmbare Funktion, die als Parameter eine Funktion nimmt und diese bei Aufruf ausführt.
+                Sobald die Funktion aber mit <span>revoke()</span> zurückgenommen wurde, führt ein erneuter Aufruf zu einem Fehler</li>
         </ul>
     </body>
 </html>
