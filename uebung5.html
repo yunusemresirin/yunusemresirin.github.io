@@ -3,6 +3,56 @@
     <head>
         <link rel="stylesheet" href="stylesheet.css">
     </head>
+    <style>
+        table {
+            border: solid 1px black;
+            padding: 1em;
+        }
+
+        table td {
+            border: solid 1px black;
+            padding: 1em;
+        }
+
+        table th {
+            padding: 0.5em;
+        }
+
+        li button {
+            margin-left: 0.5em;
+        }
+
+        li {
+            margin: 0.5em;
+        }
+
+        li span {
+            margin: 0 0 0 0.4em;
+        }
+
+        #console_space {
+            display: grid;
+            margin: 1em;
+            height: 15em;
+            grid: 1fr 1fr / 1fr;
+        }
+        
+        #console_space div {
+            padding: 0.2em 0 0 0.5em;
+            border: solid 1px black;
+            border-radius: 1em;
+            margin: 1em;
+        }
+
+        #warning {
+            color: red;
+            font-weight: 900;
+        }
+
+        #input_form {
+            margin: 0 0 0 2em;
+        }
+    </style>
     <body>
         <nav>
             <a href="solutions.html">Zurueck</a>
@@ -10,14 +60,345 @@
 
         <!-- 5.1 -->
         <h3>5.1 Performanz-Messungen von DOM-Operationen</h3>
-        <p>Bitte klicken Sie hier → <a href="uebung5-1.html">Seite 1</a></p>
+        <table>
+            <tr>
+                <th>Vergleich</th>
+                <th>Messzeit</th>
+            </tr>
+
+            <tr>
+                <td><p id="innerHTMLtest"></p></td>
+                <td><p id="innerHTML"></p></td>
+            </tr>
+
+            <tr>
+                <td><p id="innerTexttest"></p></td>
+                <td><p id="innerText"></p></td>
+            </tr>
+
+            <tr>
+                <td><p id="innerContenttest"></p></td>
+                <td><p id="innerContent"></p></td>
+            </tr>
+
+            <tr>
+                <td><p id="outerHTMLtest"></p></td>
+                <td><p id="outerHTML"></p></td>
+            </tr>
+        </table>
+
         
         <!-- 5.2 -->
         <h3>5.2 Rednerliste mit Zeitmessung</h3>
-        <p>Bitte klicken Sie hier → <a href="uebung5-2.html">Seite 1</a></p>
+        <div id="test-div"></div>
+
+        <form autocomplete="on">
+            <label for="redner_name">Neuer Redner: </label>
+            <input type="text" id="redner_name" name="redner_name" placeholder="Rednername" required>
+            <button type="button" onclick="addRedner()" id="add_button">Hinzufügen</button>
+        </form>
+
+        <ul id="redner_liste">
+
+        </ul>
         
         <!-- 5.3 -->
         <h3>5.3 TopSort als Web-App</h3>
-        <p>Bitte klicken Sie hier → <a href="uebung5-3.html">Seite 1</a></p>
+        <form id="input_form">
+            <input type="text" id="wert" name="wert" placeholder="Wert">
+            <input type="text" id="nachfolger" name="nachfolger" placeholder="Nachfolger">
+            <button id="add_button2">Add binary relation</button>
+            <span id="warning"></span>
+        </form>
+
+        <div id="console_space">
+            <div id="binaer_relations_console">
+                Binary Relations
+                <p id="binary_relations"></p>
+            </div>
+            <div id="topsort_console">
+                Topsort
+                <p id="topsort_array"></p>
+            </div>
+        </div>
+        
+        <script>
+            /** 5.1 */
+            window.onload = (event) => {
+                // Test-Funktionen
+                function innerHTMLtest() {
+                    let innerhtmlstart = performance.now()
+                    document.getElementById("innerHTMLtest").innerHTML="moin"
+                    return performance.now() - innerhtmlstart
+                }
+                
+                function innerTexttest() {
+                    let innertextstart = performance.now()
+                    document.getElementById("innerTexttest").innerText="moin"
+                    return performance.now() - innertextstart
+                }
+                
+                function innerContenttest() {
+                    let innercontentstart = performance.now()
+                    document.getElementById("innerContenttest").innerContent="<td><p id=\'testText\'></p></td>"
+                    return performance.now() - innercontentstart
+                }
+                
+                function outerHTMLtest() {
+                    let outerhtmlstart = performance.now();
+                    // .outerHTML is null/undefined ?
+                    document.getElementById("outerHTMLtest").innerHTML="<td><p id=\'testText\'></p></td>";
+                    return performance.now() - outerhtmlstart;
+                }
+    
+                function testVersuch(func) {
+                    let summe = 0
+    
+                    // Warmlauf
+                    for( let i = 0; i < 100; i++ ) {
+                        func()
+                    }
+    
+                    for( let i = 0; i < 1000; i++ ) {
+                        summe += func()
+                    }
+    
+                    return summe/(1000)
+                }
+    
+                document.getElementById("innerHTML").innerHTML=testVersuch(() => innerHTMLtest())
+                document.getElementById("innerText").innerHTML=testVersuch(() => innerTexttest())
+                document.getElementById("innerContent").innerHTML=testVersuch(() => innerContenttest())
+                document.getElementById("outerHTML").innerHTML=testVersuch(() => outerHTMLtest())
+    
+                document.getElementById("innerHTMLtest").innerText="innerHTML"
+                document.getElementById("innerTexttest").innerText="innerText"
+                document.getElementById("innerContenttest").innerText="innerContent"
+                document.getElementById("outerHTMLtest").innerText="outerHTML"
+            };
+
+            /** 5.2 */
+            const redner_liste = document.getElementById("redner_liste")
+            const text_val = document.getElementById("redner_name")
+            const add_button = document.getElementById("add_button")
+
+            var redner_array = []
+
+            function onlySpaces(str) {
+                return str.trim().length === 0
+            }
+
+            function hasValue(str) {
+                return str === text_val.value.trim()
+            }
+
+            text_val.oninput = () => {
+                for( let txt_val of redner_array ) {
+                    if(hasValue(txt_val)) {
+                        add_button.disabled = true
+                        break;
+                    } else {
+                        add_button.disabled = false
+                    }
+                }
+            }
+
+            text_val.addEventListener("keypress", (event) => {
+                if(event.key === "Enter") {
+                    event.preventDefault();
+
+                    add_button.click()
+                }
+            })
+
+            var index = 0;
+            var buttons = []
+
+            function addRedner() {
+                if(text_val.value && !onlySpaces(text_val.value)) {
+                    let list_node = document.createElement("li");
+                    let text_node = document.createTextNode( text_val.value );
+
+                    let timer = document.createElement("span");
+                    timer.innerText = '00:00:00'
+                    let timer_index = 'timer_' + index;
+                    timer.setAttribute("id", timer_index);
+
+                    let button = document.createElement("button");
+                    button.innerText = "Start!";
+                    button.withTimerText = timer
+                    button.withTimerText.h = 0
+                    button.withTimerText.m = 0
+                    button.withTimerText.s = 0
+
+                    button.addEventListener("click", () => {
+                        if(button.innerText === "Stop!") {
+                            timerFun(button)
+                            button.innerText = "Start!"
+                        } else {
+                            buttons.forEach((element) => {
+                                if(element.innerText === "Stop!") {
+                                    element.click()
+                                }
+                            })
+
+                            timerFun(button)
+                            button.innerText = "Stop!"
+                        }
+                    });
+
+                    list_node.appendChild(text_node);
+
+                    list_node.appendChild(timer);
+
+                    list_node.appendChild(button);
+                    redner_liste.appendChild(list_node);
+    
+                    redner_array.push( text_val.value );
+    
+                    text_val.value = "";
+                    button.click();
+                    buttons.push(button)
+                    index += 1;
+                }
+            }
+
+            // Timer-Function
+            function timerFun(button) {
+                if( button.innerText === "Start!" ) {
+                    let start = new Date()
+                    
+                    button.withTimer = setInterval(event => {
+                        let diff = new Date()
+    
+                        let h = diff.getHours()-start.getHours() + button.withTimerText.h
+                        let m = diff.getMinutes()-start.getMinutes() + button.withTimerText.m
+                        let s = diff.getSeconds()-start.getSeconds() + button.withTimerText.s
+    
+                        h_changed = h < 10 ? '0' + h : h
+                        m_changed = m < 10 ? '0' + m : m
+                        s_changed = s < 10 ? '0' + s : s
+    
+                        button.withTimerText.innerHTML = h_changed + ':' + m_changed + ':' + s_changed
+                        button.withTimerText.times = [h, m, s]
+                    }, 1000)
+                } else {
+                    button.withTimerText.h = button.withTimerText.times[0]
+                    button.withTimerText.m = button.withTimerText.times[1]
+                    button.withTimerText.s = button.withTimerText.times[2]
+                    clearInterval(button.withTimer)
+                }
+            }
+
+            /** 5.3 */
+            var binary_relations = []
+            var relations_ausgabe = document.getElementById("binary_relations")
+            var topsort_ausgabe = document.getElementById("topsort_array")
+            var add_button2 = document.getElementById("add_button2")
+            var nachfolger = document.getElementById("nachfolger")
+            var warning = document.getElementById("warning")
+            var wert = document.getElementById("wert")
+
+            add_button2.addEventListener("click", (event) => {
+                event.preventDefault()
+
+                if(nachfolger.value.trim() === "" || wert.value.trim() === "") {
+                    warning.innerText = "Please insert valid values"
+                } else {
+                    warning.innerText = ""
+                    setUpBinaryRelation()
+                }
+            })
+
+            function setUpBinaryRelation() {
+                let values = [wert.value, nachfolger.value]
+                console.log(values)
+                binary_relations.push(values)
+                
+                relations_ausgabe.innerText += "(" + wert.value + "," + nachfolger.value + "),"
+
+                wert.value = ""
+                nachfolger.value = ""
+
+                topsort(binary_relations)
+            }
+
+            function topsort(binary_relations) {
+                var value_list = values(binary_relations)
+                var inDegree = calculate_inDegree(binary_relations, value_list)
+                console.log(inDegree);
+                var next = [];
+                var sortierte_liste = [];
+
+                for (key in inDegree) {
+                    if (inDegree[key].degree === 0) {
+                        next.push(key);
+                    }
+                }
+
+                var k = 1;
+
+                if (next.length === 0) {
+                    return -2;
+                }
+
+                do {
+                    var current_item = next.pop();
+                    sortierte_liste.push(current_item);
+                    k += 1;
+                    inDegree[current_item].nachfolger.forEach(function (item) {
+                        if (inDegree[item].degree > 1) {
+                            inDegree[item].degree -= 1;
+                        } else {
+                            next.push(item);
+                        }
+                    })
+                } while (next.length !== 0);
+
+                if (k !== value_list.length + 1) {
+                    return -1;
+                }
+                
+                let text_node = document.createTextNode(sortierte_liste)
+                topsort_ausgabe.innerText = sortierte_liste
+            }
+
+            // Zu dem entsprechenden Eintrag ermitteln wir die Nachfolger als auch den Grad, 
+            // wie viele Vorgaenger dieser hat.
+            function calculate_inDegree(relationen, elements) {
+                // Anlegen eines Objekt-Arrays, nach dem Key-Value-Prinzip
+                var inDegree = {};
+                elements.forEach(item => {
+                    inDegree[item] = { name: item, degree: 0, nachfolger: [] };
+                })
+
+                relationen.forEach(items => {
+                    inDegree[items[1]].degree += 1;
+                    if (!inDegree[items[0]].nachfolger.includes(items[1])) {
+                        inDegree[items[0]].nachfolger.push(items[1]);
+                    }
+                })
+                return inDegree;
+            }
+
+            // Aus den binaeren Relationen eine Liste erzeugen, die
+            // die Werte genau einmal enthaelt
+            function values( array ) {
+                let arrval = []
+                
+                for( let x of array ) {
+                    if( !arrval.includes(x[0]) )
+                        arrval.push( x[0] )        
+                }
+                
+                for( let y of array ) {
+                    if( !arrval.includes(y[1]) ) {
+                        arrval.push( y[1] )       
+                    }
+                }
+                
+                return arrval
+            }
+        </script>
     </body>
 </html>
