@@ -22,6 +22,9 @@
                 padding: 0 15vw 0 0;
             }
         </style>
+        <script>
+
+        </script>
     </head>
     <body>
         <nav>
@@ -164,6 +167,61 @@
             </pre>
             <li><span>revocable</span>: Eine rücknehmbare Funktion, die als Parameter eine Funktion nimmt und diese bei Aufruf ausführt.
                 Sobald die Funktion aber mit <span>revoke()</span> zurückgenommen wurde, führt ein erneuter Aufruf zu einem Fehler</li>
+                <pre>
+                    <code>
+    function revocable(fun) {
+        return {
+            already_revoked: false;
+            invoke(x, y) {
+                already_invoked = true;
+                
+                return fun(x, y);
+            },
+            revoke() {
+                this.invoke = () => {
+                    throw new Error('The function has been revoked!')
+                }
+                
+                return already_invoked;
+            }
+        }
+    }      
+                    </code>
+                </pre>
+            <li><span>vector</span>: Fungiert als Array Wrapper-Objekt mit den Mehtoden <span>get, store</span> und <span>append</span></li>
+            <pre>
+                <code>
+    function vector() {
+        var array = [];
+        return {
+            append(value) {
+                array.push([array.length,value])
+            },
+            store( key, value ) {
+                let stored = false;
+                array.forEach( (entry, index) => {
+                    if(entry[0] === key) {
+                        entry[1] = value;
+                        stored = true;
+                    }
+                } )
+                
+                if(!stored) {
+                    array.push([key,value])
+                }
+            },
+            get(key) {
+                let value = null;
+                array.forEach( (entry,index) => {
+                    if(entry[0]===key) value = entry[1];
+                } )
+                
+                return value;
+            }
+        }
+    }
+                </code>
+            </pre>
         </ul>
     </body>
 </html>
