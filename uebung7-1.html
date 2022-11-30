@@ -22,9 +22,6 @@
                 padding: 0 15vw 0 0;
             }
         </style>
-        <script>
-
-        </script>
     </head>
     <body>
         <nav>
@@ -220,6 +217,28 @@
             }
         }
     }
+
+ /* ------------------------------- Alternativ ------------------------------- */
+
+    function vector2() {
+        var array = {};
+        index_array = 0;
+        return {
+            append(value) {
+                while(array[index_array] != undefined) {
+                    index_array++;
+                }
+                
+                array[index_array] = value
+            },
+            store( key, value ) {
+                array[key] = value
+            },
+            get(key) {
+                return array[key]
+            }
+        }
+    }    
                 </code>
             </pre>
         </ul>
