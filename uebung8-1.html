@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="stylesheet.css">
+    </head>
+    <body>
+        <nav>
+            <a href="uebung8.html">Zurueck</a>
+        </nav>
+
+        <h3>8.1 Promise</h3>
+
+        <p>Content of 'A.txt':</p>
+        <div id="first"></div>
+        <br>
+        <p>Content of 'B.txt':</p>
+        <div id="second"></div>
+
+        <script>
+            const doc_1 = document.getElementById('first')
+            const doc_2 = document.getElementById('second')
+
+            fetch('/A.txt')
+            .then((value) => value.text())
+            .then(data => doc_1.innerText = data)
+
+            fetch('/B.txt')
+            .then((value) => value.text())
+            .then(data => doc_2.innerText = data)
+        </script>
+    </body>
+</html>
