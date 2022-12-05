@@ -2,13 +2,33 @@
 <html>
     <head>
         <link rel="stylesheet" href="stylesheet.css">
+        <style>
+            span {
+                padding: 0px 2px;
+                background-color: rgb(255, 220, 220);
+                color: red;
+            }
+    
+            ul li {
+                margin: 5px;
+            }
+    
+            pre {
+                display: flex;
+                background-color: rgb(240, 240, 240);
+                border: 1px solid black;
+                border-radius: 1em;
+                width: max-content;
+                padding: 0 15vw 0 0;
+            }
+        </style>
     </head>
     <body>
         <nav>
             <a href="uebung8.html">Zurueck</a>
         </nav>
 
-        <h3>8.1 Promise</h3>
+        <h3>8.2 async / await</h3>
 
         <p>Content of 'A.txt' and 'B.txt':</p>
         <div id="content"></div>
@@ -32,17 +52,14 @@
                 }
             })();
 
-            helper.getA()
-            .then((response) => {
-                doc.innerText = response;
-                return helper.getB()
-            })
-            .then((response) => {
-                doc.innerText += response;
-            })
-            .catch((error) => {
-                doc.innerText = error;
-            })
+            async function fetch_text(){
+                let A = helper.getA();
+                let B = helper.getB();
+                let [aResponse, bResponse] = [await A, await B];
+                doc.innerText = aResponse + bResponse;
+            }
+
+            fetch_text();
         </script>
     </body>
 </html>
