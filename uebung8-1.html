@@ -2,6 +2,26 @@
 <html>
     <head>
         <link rel="stylesheet" href="stylesheet.css">
+        <style>
+            span {
+                padding: 0px 2px;
+                background-color: rgb(255, 220, 220);
+                color: red;
+            }
+    
+            ul li {
+                margin: 5px;
+            }
+    
+            pre {
+                display: flex;
+                background-color: rgb(240, 240, 240);
+                border: 1px solid black;
+                border-radius: 1em;
+                width: max-content;
+                padding: 0 15vw 0 0;
+            }
+        </style>
     </head>
     <body>
         <nav>
@@ -44,5 +64,39 @@
                 doc.innerText = error;
             })
         </script>
+
+        <p><b>Code:</b></p>
+        <pre>
+            <code>
+    const doc = document.getElementById('content')
+
+    const helper = (function(){
+        function getA(){
+            return fetch('/A.txt')
+                .then((response) => { return response.text() })
+        }
+        function getB(){
+            return fetch('/B.txt')
+                .then((response) => { return response.text() })
+        }
+        return {
+            getA,
+            getB
+        }
+    })();
+
+    helper.getA()
+    .then((response) => {
+        doc.innerText = response;
+        return helper.getB()
+    })
+    .then((response) => {
+        doc.innerText += response;
+    })
+    .catch((error) => {
+        doc.innerText = error;
+    })
+            </code>
+        </pre>
     </body>
 </html>

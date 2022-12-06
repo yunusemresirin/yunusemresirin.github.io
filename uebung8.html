@@ -2,6 +2,26 @@
 <html>
     <head>
         <link rel="stylesheet" href="stylesheet.css">
+        <style>
+            span {
+                padding: 0px 2px;
+                background-color: rgb(255, 220, 220);
+                color: red;
+            }
+    
+            ul li {
+                margin: 5px;
+            }
+    
+            pre {
+                display: flex;
+                background-color: rgb(240, 240, 240);
+                border: 1px solid black;
+                border-radius: 1em;
+                width: max-content;
+                padding: 0 15vw 0 0;
+            }
+        </style>
     </head>
     <body>
         <nav>
@@ -10,10 +30,142 @@
         
         <!-- 8.1 -->
         <h3>8.1 Promises</h3>
-        <p>Bitte klicken Sie hier → <a href="uebung8-1.html">Seite 1</a></p>
+        <p>Content of 'A.txt' and 'B.txt':</p>
+        <div id="content"></div>
+
+        <script>
+            // https://www.bestrandoms.com/random-short-story → Random short story
+            const doc_1 = document.getElementById('content_1')
+
+            const helper_1 = (function(){
+                function getA(){
+                    return fetch('/A.txt')
+                        .then((response) => { return response.text() })
+                }
+                function getB(){
+                    return fetch('/B.txt')
+                        .then((response) => { return response.text() })
+                }
+                return {
+                    getA,
+                    getB
+                }
+            })();
+
+            helper_1.getA()
+            .then((response) => {
+                doc_1.innerText = response;
+                return helper.getB()
+            })
+            .then((response) => {
+                doc_1.innerText += response;
+            })
+            .catch((error) => {
+                doc_1.innerText = error;
+            })
+        </script>
+
+        <p><b>Code:</b></p>
+        <pre>
+            <code>
+    const doc = document.getElementById('content_1')
+
+    const helper = (function(){
+        function getA(){
+            return fetch('/A.txt')
+                .then((response) => { return response.text() })
+        }
+        function getB(){
+            return fetch('/B.txt')
+                .then((response) => { return response.text() })
+        }
+        return {
+            getA,
+            getB
+        }
+    })();
+
+    helper.getA()
+    .then((response) => {
+        doc.innerText = response;
+        return helper.getB()
+    })
+    .then((response) => {
+        doc.innerText += response;
+    })
+    .catch((error) => {
+        doc.innerText = error;
+    })
+            </code>
+        </pre>
         
         <!-- 8.2 -->
         <h3>8.2 async / await</h3>
-        <p>Bitte klicken Sie hier → <a href="uebung8-2.html">Seite 1</a></p>
+        <p>Content of 'A.txt' and 'B.txt':</p>
+        <div id="content_2"></div>
+
+        <script>
+            // https://www.bestrandoms.com/random-short-story → Random short story
+            const doc_2 = document.getElementById('content_2')
+
+            const helper_2 = (function(){
+                function getA(){
+                    return fetch('/A.txt')
+                        .then((response) => { return response.text() })
+                }
+                function getB(){
+                    return fetch('/B.txt')
+                        .then((response) => { return response.text() })
+                }
+                return {
+                    getA,
+                    getB
+                }
+            })();
+
+            async function fetch_text(){
+                let A = helper_2.getA();
+                let B = helper_2.getB();
+                let [aResponse, bResponse] = [await A, await B];
+                doc_2.innerText = aResponse + bResponse;
+            }
+
+            fetch_text();
+        </script>
+
+        <p><b>Code:</b></p>
+        <pre>
+            <code>
+    const doc = document.getElementById('content')
+
+    const helper = (function(){
+        function getA(){
+            return fetch('/A.txt')
+                .then((response) => { return response.text() })
+        }
+        function getB(){
+            return fetch('/B.txt')
+                .then((response) => { return response.text() })
+        }
+        return {
+            getA,
+            getB
+        }
+    })();
+
+    async function fetch_text(){
+        let A = helper.getA();
+        let B = helper.getB();
+        let [aResponse, bResponse] = [await A, await B];
+        doc.innerText = aResponse + bResponse;
+    }
+
+    fetch_text();
+            </code>
+        </pre>
+
+        <!-- 8.3 -->
+        <h3>8.3 WWW-Navigator</h3>
+        <p>Bitte klicken Sie hier → <a href="uebung8-3.html">Seite 1</a></p>
     </body>
 </html>

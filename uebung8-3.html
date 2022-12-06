@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="stylesheet.css">
+        <style>
+            .outer_body {
+                display: grid;
+                grid: 10em 50em 7.5em / 100%;
+
+                border: 1px solid black;
+                border-radius: 3em;
+            }
+
+            #navigation {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+
+                border-top-left-radius: 3em;
+                border-top-right-radius: 3em;
+
+                background-color: rgb(200, 33, 33);
+            }
+
+            #body {
+                display: grid;
+                grid: 1fr / 25% 1fr 25%;
+
+                background: rgb(223, 105, 105);
+            }
+
+            #content {
+                background-color: rgb(75, 189, 199);
+            }
+
+            #footer {
+                border-bottom-left-radius: 3em;
+                border-bottom-right-radius: 3em;
+
+                background-color: black;
+            }
+
+            #navigation nav {
+                border: 0px;
+                background-color: transparent;
+            }
+            
+            #navigation a {
+                background-color: rgb(100, 100, 204);
+                padding: 1em;
+                color: white;
+            }
+            
+            #navigation a:hover {
+                cursor: pointer;
+                background-color: rgb(120, 120, 185);
+            }
+
+
+        </style>
+    </head>
+    <body>
+        <nav>
+            <a href="uebung8.html">Zurueck</a>
+        </nav>
+        
+        <h3>8.3 WWW-Navigator</h3>
+
+        <div class="outer_body">
+            <div id="navigation">
+                <h1 style="color: white;">WWW-Navigator</h1>
+                <nav>
+                    <a>HTML</a>
+                    <a>CSS</a>
+                    <a>JavaScript</a>
+                    <a>Other</a>
+                </nav>
+            </div>
+            <div id="body">
+                <div id="menu"></div>
+                <div id="content"></div>
+                <div id="info"></div>
+            </div>
+            <div id="footer"></div>
+        </div>
+    </body>
+</html>

@@ -61,5 +61,36 @@
 
             fetch_text();
         </script>
+
+        <p><b>Code:</b></p>
+        <pre>
+            <code>
+    const doc = document.getElementById('content')
+
+    const helper = (function(){
+        function getA(){
+            return fetch('/A.txt')
+                .then((response) => { return response.text() })
+        }
+        function getB(){
+            return fetch('/B.txt')
+                .then((response) => { return response.text() })
+        }
+        return {
+            getA,
+            getB
+        }
+    })();
+
+    async function fetch_text(){
+        let A = helper.getA();
+        let B = helper.getB();
+        let [aResponse, bResponse] = [await A, await B];
+        doc.innerText = aResponse + bResponse;
+    }
+
+    fetch_text();
+            </code>
+        </pre>
     </body>
 </html>
