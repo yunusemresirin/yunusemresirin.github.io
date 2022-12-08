@@ -31,7 +31,7 @@
         <!-- 8.1 -->
         <h3>8.1 Promises</h3>
         <p>Content of 'A.txt' and 'B.txt':</p>
-        <div id="content"></div>
+        <div id="content_1"></div>
 
         <script>
             // https://www.bestrandoms.com/random-short-story → Random short story
@@ -55,7 +55,7 @@
             helper_1.getA()
             .then((response) => {
                 doc_1.innerText = response;
-                return helper.getB()
+                return helper_1.getB()
             })
             .then((response) => {
                 doc_1.innerText += response;

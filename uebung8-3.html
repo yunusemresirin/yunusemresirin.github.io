@@ -41,23 +41,61 @@
                 background-color: black;
             }
 
-            #navigation nav {
-                border: 0px;
+            div nav {
+                border: transparent;
                 background-color: transparent;
             }
             
-            #navigation a {
+            div a {
                 background-color: rgb(100, 100, 204);
                 padding: 1em;
                 color: white;
             }
+
+            div a:enabled {
+                background-color: purple;
+            }
             
-            #navigation a:hover {
+            a:hover {
                 cursor: pointer;
                 background-color: rgb(120, 120, 185);
             }
 
+            #menu nav {
+                display: flex;
+                flex-direction: column;
+            }
 
+            #menu nav a {
+                margin: 10px;
+            }
+
+            #menu nav a:hover {
+                background-color: rgb(120, 120, 185);
+                font-weight: 100;
+            }
+
+            #footer a {
+                margin: 0;
+                background-color: transparent;
+                text-decoration: underline;
+            }
+            
+            #footer a:hover {
+                background-color: transparent;
+                color: grey;
+            }
+            
+            #footer {
+                display: flex;
+                align-items: baseline;
+                justify-content: center;
+                padding-left: 8em;
+            }
+            
+            #content {
+                padding: 3em;
+            }
         </style>
     </head>
     <body>
@@ -71,10 +109,10 @@
             <div id="navigation">
                 <h1 style="color: white;">WWW-Navigator</h1>
                 <nav>
-                    <a>HTML</a>
-                    <a>CSS</a>
-                    <a>JavaScript</a>
-                    <a>Other</a>
+                    <a value="html" onclick="setUpMenu(this)">HTML</a>
+                    <a value="css" onclick="setUpMenu(this)">CSS</a>
+                    <a value="javascript" onclick="setUpMenu(this)">JavaScript</a>
+                    <a value="" onclick="">Other</a>
                 </nav>
             </div>
             <div id="body">
@@ -82,7 +120,49 @@
                 <div id="content"></div>
                 <div id="info"></div>
             </div>
-            <div id="footer"></div>
+            <div id="footer">
+                <h2 style="color: white">Footer:</h2>
+                <nav>
+                    <a>Sitemap</a>
+                    <a>Home</a>
+                    <a>News</a>
+                    <a>Contact</a>
+                    <a>About</a>
+                </nav>
+            </div>
         </div>
+
+        <script>
+            const helper = fetch('./links.json').then((response) => {return response.json()})
+            var links = (async function() { return await helper })();
+            var links_obj;
+            links.then((value) => links_obj = value)
+
+            var menu = document.getElementById("menu");
+            var content = document.getElementById("content");
+
+            function setUpMenu(topic) {
+                content.innerText = ''
+
+                if(menu.hasChildNodes()) menu.removeChild(menu.lastElementChild)
+
+                var menu_node = document.createElement('nav');
+                var objects = links_obj[topic.getAttribute('value')];
+                for(let entry in objects) {
+                    var link_node = document.createElement('a');
+                    link_node.innerText = entry;
+                    link_node.setAttribute('value', 'entry')
+                    link_node.setAttribute('onclick', `showContent(this, \'${topic.getAttribute('value')}\')`)
+
+                    menu_node.appendChild(link_node)
+                }
+
+                menu.appendChild(menu_node);
+            }
+
+            function showContent(obj, topic) {
+                content.innerText = links_obj[topic][obj.innerText]["content"]
+            }
+        </script>
     </body>
 </html>
