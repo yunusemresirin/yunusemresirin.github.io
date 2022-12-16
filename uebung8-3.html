@@ -5,7 +5,7 @@
         <style>
             .outer_body {
                 display: grid;
-                grid: 10em 50em 7.5em / 100%;
+                grid: 10em 35em 7.5em / 100%;
 
                 border: 1px solid black;
                 border-radius: 3em;
@@ -61,18 +61,30 @@
                 background-color: rgb(120, 120, 185);
             }
 
+            #menu {
+                display: flex;
+                justify-content: center;
+            }
+
             #menu nav {
                 display: flex;
                 flex-direction: column;
             }
 
             #menu nav a {
+                display: flex;
+                justify-content: center;
                 margin: 10px;
             }
-
+            
             #menu nav a:hover {
                 background-color: rgb(120, 120, 185);
                 font-weight: 100;
+            }
+
+            #info {
+                display: block;
+                padding-left: 1em;
             }
 
             #footer a {
@@ -94,7 +106,7 @@
             }
             
             #content {
-                padding: 3em;
+                padding: 1em;
             }
         </style>
     </head>
@@ -118,7 +130,9 @@
             <div id="body">
                 <div id="menu"></div>
                 <div id="content"></div>
-                <div id="info"></div>
+                <div id="info">
+                    <h3 style="color: white;">Additional information:</h3>
+                </div>
             </div>
             <div id="footer">
                 <h2 style="color: white">Footer:</h2>

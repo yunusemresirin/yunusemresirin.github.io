@@ -37,6 +37,25 @@
             // https://www.bestrandoms.com/random-short-story → Random short story
             const doc_1 = document.getElementById('content_1')
 
+            // const get = (url) => {
+            //     return new Promise((resolve, reject) => {
+            //     var req = new XMLHttpRequest();
+            //     req.open('GET', url);
+
+            //     req.onload = () => {
+            //         console.log(req.status )
+            //         if(req.status === 200) {
+            //             resolve(req.response)
+            //         } else {
+            //             reject(alert(req.statusText))
+            //         }
+            //     }
+
+            // })}
+
+            // var A = get('./A.txt');
+            // var B = get('./B.txt');
+
             const helper_1 = (function(){
                 function getA(){
                     return fetch('/A.txt')
@@ -123,14 +142,12 @@
                 }
             })();
 
-            async function fetch_text(){
+            (async function (){
                 let A = helper_2.getA();
                 let B = helper_2.getB();
                 let [aResponse, bResponse] = [await A, await B];
                 doc_2.innerText = aResponse + bResponse;
-            }
-
-            fetch_text();
+            })()
         </script>
 
         <p><b>Code:</b></p>
@@ -153,14 +170,12 @@
         }
     })();
 
-    async function fetch_text(){
-        let A = helper.getA();
-        let B = helper.getB();
+    (async function (){
+        let A = await helper_2.getA();
+        let B = await helper_2.getB();
         let [aResponse, bResponse] = [await A, await B];
-        doc.innerText = aResponse + bResponse;
-    }
-
-    fetch_text();
+        doc_2.innerText = aResponse + bResponse;
+    })()
             </code>
         </pre>
 
