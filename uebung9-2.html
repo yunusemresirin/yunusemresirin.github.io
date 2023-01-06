@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="stylesheet.css">
+        <style>
+            svg {
+                /* border: 2px solid black;  */
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <a href="uebung9.html">Zurueck</a>
+        </nav>
+        
+        <h3>9.2 Statistik-Balkendiagramm in SVG</h3>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+            <g class="x-y-axis" aria-hidden="true">
+                <path stroke="black" stroke-width="1" stroke-dasharray="none" id="highcharts-grid-line" d="M 100 0 L 100 340 z" opacity="0.5"></path>
+                <path stroke="black" stroke-width="1" stroke-dasharray="none" id="highcharts-grid-line" d="M 100 340 L 480 340 z" opacity="0.5"></path>
+            </g>
+            <g id="bar">
+
+            </g>
+        </svg>
+
+        <script>
+            var svg = document.getElementById('bar');
+            var covid_data = fetch('./covid-data.json').then((data) => {return data.json()})
+            
+            var drawBarChart = async () => {
+                let covid = await covid_data;
+
+                let i = 20;
+                for(let city in covid) {
+
+                    svg.innerHTML += `
+                    <text x="10" y="${i}" font-size="8">${city}</text>
+                    <rect x="100" y="${i}" width="60"
+                        height="2" fill="red">
+                    </rect>
+                        `;
+
+                    i += 20;
+                }
+            }
+
+            drawBarChart().then().catch(() => {alert('Ein Fehler ist aufgetreten!')})
+        </script>
+    </body>
+</html>
