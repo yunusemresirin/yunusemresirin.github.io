@@ -6,6 +6,28 @@
             svg {
                 /* border: 2px solid black;  */
             }
+
+            .population {
+                fill: darkblue;
+            }
+
+            .cases {
+                fill: green;
+            }
+
+            .deaths {
+                fill: red;
+            }
+
+            .legend {
+                fill: #f9f5ee;
+            }
+
+            .legend_details {
+                font-size: 9px;
+                font-family:Arial, Helvetica, sans-serif;
+                font-weight: bold;
+            }
         </style>
     </head>
     <body>
@@ -14,9 +36,10 @@
         </nav>
         
         <h3>9.2 Statistik-Balkendiagramm in SVG</h3>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 525 500">
             <g id="x-y-axis" aria-hidden="true"></g>
             <g id="bar"></g>
+            <g id="legend"></g>
             <g id="xaxis-label"></g>
         </svg>
             
@@ -24,6 +47,7 @@
             var svg = document.getElementById('bar');
             var xaxis_label = document.getElementById('xaxis-label');
             var x_y_axis = document.getElementById('x-y-axis');
+            var legend = document.getElementById('legend');
 
             var covid_data = fetch('./covid.json').then((data) => {return data.json()});
             
@@ -34,7 +58,7 @@
                         ${i*steps}
                     </text>
                     <text x="450" text-anchor="end" transform="translate(0,0)" class="xaxis_label" style="color: rgb(102, 102, 102); fill: rgb(102, 102, 102); font-size: 10px;" y="${distance * elements + 60}">
-                        Cases
+                        People (million)
                     </text>
                     `
                 }
@@ -43,15 +67,39 @@
             var addYAxisGrid = (position, border, elements, distance) => {
                 for(let i = 0; i < border; i++) {
                     x_y_axis.innerHTML += `
-                    <path stroke="black" stroke-width="1" stroke-dasharray="none" id="highcharts-grid-line" d="M ${position.solid + position.var * i} 0 L ${position.solid + position.var * i} ${distance * elements + 20} z" opacity="0.2">
+                    <path stroke="black" stroke-width="1" stroke-dasharray="none" class="yaxis-grid" d="M ${position.solid + position.var * i} 0 L ${position.solid + position.var * i} ${distance * elements + 20} z" opacity="0.2">
                     </path>
                     `
                 }
+            }
+
+            var addLegend = () => {
+                legend.innerHTML += `
+                <!-- Shadow -->
+                <defs>
+                    <filter id="f2" x="0 y="0" width="200%" height="200%">
+                        <feOffset result="offOut" in="SourceGraphic" dx="5" dy="5" />
+                        <feColorMatrix result="matrixOut" in="offOut" type="matrix"
+                        values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.45 0" />
+                        <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="10" />
+                        <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+                    </filter>
+                </defs>
+                <rect class="legend" stroke="#000000" stroke-width="1" stroke-opacity="0.05" x="320" y="75" width="80" height="70" filter="url(#f2)">
+                
+                </rect>
+                <g>
+                    <text class="legend_details" x="335" y="95" fill="blue">Population</text>
+                    <text class="legend_details" x="335" y="114" fill="green">Cases</text>
+                    <text class="legend_details" x="335" y="132.5" fill="red">Deaths</text>
+                </g>
+                `
             }
     
             var setUpChart = (coordinates, elements, x_axis_label_distance) => {
                 addXAxisLabel(coordinates.position, coordinates.border, coordinates.steps, elements,x_axis_label_distance );
                 addYAxisGrid(coordinates.position, coordinates.border, elements, x_axis_label_distance);
+                addLegend();
             }
 
             // Main-Component
@@ -62,10 +110,10 @@
                             var: 48.1
                         },
                     border: 8,
-                    steps: 6000
+                    steps: 1
                 }
 
-                const x_axis_label_distance = 20;
+                const x_axis_label_distance = 22.5;
 
                 let covid = await covid_data;
                 let i = Object.keys(covid).length;
@@ -77,13 +125,25 @@
                     console.log(covid[city]["cases"])
 
                     svg.innerHTML += `
-                    <text x="10" y="${i}" font-size="8">${city}</text>
-                    <rect x="100" y="${i}" width="
-                        ${ coordinates.position.var * ((covid[city]["cases"])/coordinates.steps) }
+                    <text x="10" y="${i+6}" font-size="8">${city}</text>
+                    <rect x="100" y="${i-3}" width="
+                    ${ coordinates.position.var * ((covid[city]["population"])/(coordinates.steps * 1000000)) }
+                    "
+                    height="3" fill="blue">
+                    </rect>
+                    <text x="${ (coordinates.position.var * ((covid[city]["population"])/(coordinates.steps * 1000000))) + 105 }" y="${i}" font-size="7" font-weight="bold" class="population">${covid[city]["population"]}</text>
+                    <rect x="100" y="${i+3}" width="
+                        ${ coordinates.position.var * ((covid[city]["cases"])/(coordinates.steps * 1000000)) }
+                        "
+                        height="3" fill="green">
+                    </rect>
+                    <text x="${ (coordinates.position.var * ((covid[city]["cases"])/(coordinates.steps * 1000000))) + 105 }" y="${i + 6.75}" font-size="7" font-weight="bold" class="cases">${covid[city]["cases"]}</text>
+                    <rect x="100" y="${i+9}" width="
+                        ${ coordinates.position.var * ((covid[city]["deaths"])/(coordinates.steps * 1000000)) }
                         "
                         height="3" fill="red">
                     </rect>
-                    <text x="${ (coordinates.position.var * ((covid[city]["cases"])/coordinates.steps)) + 105 }" y="${i + 3.75}" font-size="8">${covid[city]["cases"]}</text>
+                    <text x="${ (coordinates.position.var * ((covid[city]["deaths"])/(coordinates.steps * 1000000))) + 105 }" y="${i + 12.75}" font-size="7" font-weight="bold" class="deaths">${covid[city]["deaths"]}</text>
                         `;
 
                     i += x_axis_label_distance;
