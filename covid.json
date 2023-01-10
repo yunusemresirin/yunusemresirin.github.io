@@ -1,79 +1,96 @@
 {
     "Baden-Württemberg": {
+        "population": 4983112,
         "cases": 10582
+        
     },
     
     "Bayern": {
+        "population": 6627065,
         "cases": 11937
         
     },
     
     "Berlin": {
+        "population": 1409992,
         "cases": 5535
         
     },
     
     "Brandenburg": {
+        "population": 1098501,
         "cases": 4300
         
     },
     
     "Bremen": {
+        "population": 299340,
         "cases": 1550
         
     },
     
     "Hamburg": {
+        "population": 799258,
         "cases": 2347
         
     },
     
     "Hessen": {
+        "population": 2865050,
         "cases": 11571
         
     },
     
     "Mecklenburg-Vorpommern": {
+        "population": 702227,
         "cases": 3270
         
     },
     
     "Niedersachsen": {
+        "population": 3778313,
         "cases": 21939
         
     },
     
     "Nordrhein-Westfalen": {
+        "population": 7841667,
         "cases": 39353
         
     },
     
     "Rheinland-Pfalz": {
+        "population": 1730413,
         "cases": 7964
         
     },
     
     "Saarland": {
+        "population": 481563,
         "cases": 2075
         
     },
     
     "Sachsen": {
+        "population": 1937431,
         "cases": 4124
         
     },
     
     "Sachsen-Anhalt": {
+        "population": 948913,
         "cases": 2713
         
     },
     
     "Schleswig-Holstein": {
+        "population": 1161782,
         "cases": 4521
         
     },
     
     "Thüringen": {
+        "population": 875445,
         "cases": 1850
 
     }

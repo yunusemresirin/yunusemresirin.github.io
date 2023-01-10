@@ -15,34 +15,80 @@
         
         <h3>9.2 Statistik-Balkendiagramm in SVG</h3>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
-            <g class="x-y-axis" aria-hidden="true">
-                <path stroke="black" stroke-width="1" stroke-dasharray="none" id="highcharts-grid-line" d="M 100 0 L 100 340 z" opacity="0.5"></path>
-                <path stroke="black" stroke-width="1" stroke-dasharray="none" id="highcharts-grid-line" d="M 100 340 L 480 340 z" opacity="0.5"></path>
-            </g>
-            <g id="bar">
-
-            </g>
+            <g id="x-y-axis" aria-hidden="true"></g>
+            <g id="bar"></g>
+            <g id="xaxis-label"></g>
         </svg>
-
+            
         <script>
             var svg = document.getElementById('bar');
-            var covid_data = fetch('./covid-data.json').then((data) => {return data.json()})
-            
-            var drawBarChart = async () => {
-                let covid = await covid_data;
+            var xaxis_label = document.getElementById('xaxis-label');
+            var x_y_axis = document.getElementById('x-y-axis');
 
-                let i = 20;
+            var covid_data = fetch('./covid.json').then((data) => {return data.json()});
+            
+            var addXAxisLabel = (position, border, steps, elements, distance) => {
+                for(let i = 0; i < border; i++) {
+                    xaxis_label.innerHTML += `
+                    <text x="${position.solid + position.var * i}" text-anchor="middle" transform="translate(0,0)" style="color: rgb(102, 102, 102); cursor: default; font-size: 10px; fill: rgb(102, 102, 102);" y="${distance * elements + 40}" opacity="1">
+                        ${i*steps}
+                    </text>
+                    <text x="450" text-anchor="end" transform="translate(0,0)" class="xaxis_label" style="color: rgb(102, 102, 102); fill: rgb(102, 102, 102); font-size: 10px;" y="${distance * elements + 60}">
+                        Cases
+                    </text>
+                    `
+                }
+            }
+    
+            var addYAxisGrid = (position, border, elements, distance) => {
+                for(let i = 0; i < border; i++) {
+                    x_y_axis.innerHTML += `
+                    <path stroke="black" stroke-width="1" stroke-dasharray="none" id="highcharts-grid-line" d="M ${position.solid + position.var * i} 0 L ${position.solid + position.var * i} ${distance * elements + 20} z" opacity="0.2">
+                    </path>
+                    `
+                }
+            }
+    
+            var setUpChart = (coordinates, elements, x_axis_label_distance) => {
+                addXAxisLabel(coordinates.position, coordinates.border, coordinates.steps, elements,x_axis_label_distance );
+                addYAxisGrid(coordinates.position, coordinates.border, elements, x_axis_label_distance);
+            }
+
+            // Main-Component
+            var drawBarChart = async () => {
+                const coordinates = {   
+                    position: {
+                            solid: 100, 
+                            var: 48.1
+                        },
+                    border: 8,
+                    steps: 6000
+                }
+
+                const x_axis_label_distance = 20;
+
+                let covid = await covid_data;
+                let i = Object.keys(covid).length;
+                
+
+                setUpChart(coordinates, i, x_axis_label_distance);
+                
                 for(let city in covid) {
+                    console.log(covid[city]["cases"])
 
                     svg.innerHTML += `
                     <text x="10" y="${i}" font-size="8">${city}</text>
-                    <rect x="100" y="${i}" width="60"
-                        height="2" fill="red">
+                    <rect x="100" y="${i}" width="
+                        ${ coordinates.position.var * ((covid[city]["cases"])/coordinates.steps) }
+                        "
+                        height="3" fill="red">
                     </rect>
+                    <text x="${ (coordinates.position.var * ((covid[city]["cases"])/coordinates.steps)) + 105 }" y="${i + 3.75}" font-size="8">${covid[city]["cases"]}</text>
                         `;
 
-                    i += 20;
+                    i += x_axis_label_distance;
                 }
+
             }
 
             drawBarChart().then().catch(() => {alert('Ein Fehler ist aufgetreten!')})
