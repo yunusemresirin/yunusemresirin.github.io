@@ -83,28 +83,73 @@
                         marking.innerHTML += setMarking(element);
                             
                         element.onclick = ""
-                        element.clicked = true
+
+                        checkWhoWon();
                     };
                 }
             }
 
-            var counter = 0;
-            const setMarking = (element) => {
-                let x = [
-                        `
-                        <path stroke="black" stroke-width="1" stroke-dasharray="none" class="grid" d="M ${ element.getAttribute('x') } ${ element.getAttribute('y') } L ${ parseInt(element.getAttribute('width')) + parseInt(element.getAttribute('x'))} ${ parseInt(element.getAttribute('height')) + parseInt(element.getAttribute('y')) } z" opacity="0.6" />
-                        <path stroke="black" stroke-width="1" stroke-dasharray="none" class="grid" d="M ${ element.getAttribute('x') } ${ parseInt(element.getAttribute('height')) + parseInt(element.getAttribute('y')) } L ${ parseInt(element.getAttribute('width')) + parseInt(element.getAttribute('x')) } ${ element.getAttribute('y') } z" opacity="0.6" />
-                        `,
-                        `
-                        <path stroke="green" stroke-width="1" stroke-dasharray="none" class="grid" d="M ${ element.getAttribute('x') } ${ element.getAttribute('y') } L ${ parseInt(element.getAttribute('width')) + parseInt(element.getAttribute('x'))} ${ parseInt(element.getAttribute('height')) + parseInt(element.getAttribute('y')) } z" opacity="0.6" />
-                        <path stroke="green" stroke-width="1" stroke-dasharray="none" class="grid" d="M ${ element.getAttribute('x') } ${ parseInt(element.getAttribute('height')) + parseInt(element.getAttribute('y')) } L ${ parseInt(element.getAttribute('width')) + parseInt(element.getAttribute('x')) } ${ element.getAttribute('y') } z" opacity="0.6" />
-                        `
-                        ];
-                
-                return x[(counter++)%2];
+            function checkWhoWon() {
+                // We need to check:
+                // top-left to top-right
+
+
+                // middle-left to middle-right
+
+
+                // bottom-left to bottom-right
+
+
+                // top-left to bottom-right
+
+
+                // top-right to bottom-left
+
+
+                // top-left to bottom-left
+
+
+                // top-center to bottom-center
+
+
+                // top-right to bottom-right
+
+
+                // Reminder: 0 references the Cross and 1 references the Circle
             }
 
-            drawGameTemplate(325).then( (check) => check().then().catch( () => {alert('ERROR')} ));
+            var counter = 0;
+            const setMarking = (element) => {
+                let clickedWith = [
+                    // Cross
+                    0,
+                    // Circle
+                    1
+                ]
+
+                let svg_element = [
+                    // Cross
+                    `
+                    <path stroke="black" stroke-width="1" stroke-dasharray="none" class="grid" d="M ${ element.getAttribute('x') } ${ element.getAttribute('y') } L ${ parseInt(element.getAttribute('width')) + parseInt(element.getAttribute('x'))} ${ parseInt(element.getAttribute('height')) + parseInt(element.getAttribute('y')) } z" opacity="0.6" />
+                    <path stroke="black" stroke-width="1" stroke-dasharray="none" class="grid" d="M ${ element.getAttribute('x') } ${ parseInt(element.getAttribute('height')) + parseInt(element.getAttribute('y')) } L ${ parseInt(element.getAttribute('width')) + parseInt(element.getAttribute('x')) } ${ element.getAttribute('y') } z" opacity="0.6" />
+                    `,
+                    // Circle
+                    `
+                    <circle cx="${ parseInt(element.getAttribute('x')) + parseInt(element.getAttribute('width'))/2 }" cy="${ parseInt(element.getAttribute('y')) + parseInt(element.getAttribute('width'))/2 }" r="${ parseInt(element.getAttribute('width'))*1/3 }" stroke="black" stroke-width="1" fill="none" />
+                    `
+                ];
+
+                element.clickedWithMarking = clickedWith[(counter)%2]
+
+                return svg_element[(counter++)%2];
+            }
+
+
+            drawGameTemplate(325)
+                                .then( (check) => check()
+                                                        .then()
+                                                        .catch( () => { alert('Something went wrong!') } )
+                                        );
         </script>
     </body>
 </html>
