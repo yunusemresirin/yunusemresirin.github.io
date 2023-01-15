@@ -7,7 +7,14 @@
                 width: 360px;
                 height: 380px;
             }
+            
+            #gameboard rect {
+                fill: white;
+            }
 
+            /* #top_left {
+                fill: purple;
+            } */
         </style>
     </head>
     <body>
@@ -28,11 +35,76 @@
         <!-- 9.3 -->
         <h3>9.3 Tic Tac Toe</h3>
         <main>
-            <div id="game"></div>
+            <div id="game">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 350">
+                    <g id="gameboard"></g>
+                    <g id="marking"></g>
+                </svg>
+            </div>
             <div id="info"></div>
-          </main>
+        </main>
         <script>
-        
+            const game = document.getElementById("gameboard");
+            const marking = document.getElementById("marking");
+            var elements = [];
+            
+            async function drawGameTemplate(a) {
+                game.innerHTML += `
+                <rect id="top_left" x="0" y="0" width="${a*1/3}" height="${a*1/3}" fill="blue"/>
+                <rect id="middle_left" x="0" y="${a/3}" width="${a*1/3}" height="${a*1/3}"/>
+                <rect id="bottom_left" x="0" y="${a*2/3}" width="${a*1/3}" height="${a*1/3}"/>
+                <rect id="top_center" x="${a/3}" y="0" width="${a*1/3}" height="${a*1/3}"/>
+                <rect id="middle_center" x="${a/3}" y="${a/3}" width="${a*1/3}" height="${a*1/3}"/>
+                <rect id="bottom_center" x="${a/3}" y="${a*2/3}" width="${a*1/3}" height="${a*1/3}"/>
+                <rect id="top_right" x="${a*2/3}" y="0" width="${a*1/3}" height="${a*1/3}"/>
+                <rect id="middle_right" x="${a*2/3}" y="${a/3}" width="${a*1/3}" height="${a*1/3}"/>
+                <rect id="bottom_right" x="${a*2/3}" y="${a*2/3}" width="${a*1/3}" height="${a*1/3}"/>
+                <!-- <rect x="0" y="0" width="${a}" height="${a}" fill="white"/> -->
+                <path stroke="black" stroke-width="1" stroke-dasharray="none" class="grid" d="M ${a/3} 0 L ${a/3} ${a} z" opacity="0.6"/>
+                <path stroke="black" stroke-width="1" stroke-dasharray="none" class="grid" d="M ${a*2/3} 0 L ${a*2/3} ${a} z" opacity="0.6"/>
+                <path stroke="black" stroke-width="1" stroke-dasharray="none" class="grid" d="M 0 ${a/3} L ${a} ${a/3} z" opacity="0.6"/>
+                <path stroke="black" stroke-width="1" stroke-dasharray="none" class="grid" d="M 0 ${a*2/3} L ${a} ${a*2/3} z" opacity="0.6"/>
+                `
+                
+                for(let substring1 of ['top', 'middle', 'bottom']) {
+                    for(let substring2 of ['left', 'center', 'right']) {
+                        elements.push(document.getElementById(`${ substring1 }_${ substring2 }`))
+                    }
+                }
+
+                return checkIfClicked;
+            }
+            
+            
+            async function checkIfClicked() {
+                for(let element of elements) {
+                    
+                    element.onclick = (event) => {
+                        marking.innerHTML += setMarking(element);
+                            
+                        element.onclick = ""
+                        element.clicked = true
+                    };
+                }
+            }
+
+            var counter = 0;
+            const setMarking = (element) => {
+                let x = [
+                        `
+                        <path stroke="black" stroke-width="1" stroke-dasharray="none" class="grid" d="M ${ element.getAttribute('x') } ${ element.getAttribute('y') } L ${ parseInt(element.getAttribute('width')) + parseInt(element.getAttribute('x'))} ${ parseInt(element.getAttribute('height')) + parseInt(element.getAttribute('y')) } z" opacity="0.6" />
+                        <path stroke="black" stroke-width="1" stroke-dasharray="none" class="grid" d="M ${ element.getAttribute('x') } ${ parseInt(element.getAttribute('height')) + parseInt(element.getAttribute('y')) } L ${ parseInt(element.getAttribute('width')) + parseInt(element.getAttribute('x')) } ${ element.getAttribute('y') } z" opacity="0.6" />
+                        `,
+                        `
+                        <path stroke="green" stroke-width="1" stroke-dasharray="none" class="grid" d="M ${ element.getAttribute('x') } ${ element.getAttribute('y') } L ${ parseInt(element.getAttribute('width')) + parseInt(element.getAttribute('x'))} ${ parseInt(element.getAttribute('height')) + parseInt(element.getAttribute('y')) } z" opacity="0.6" />
+                        <path stroke="green" stroke-width="1" stroke-dasharray="none" class="grid" d="M ${ element.getAttribute('x') } ${ parseInt(element.getAttribute('height')) + parseInt(element.getAttribute('y')) } L ${ parseInt(element.getAttribute('width')) + parseInt(element.getAttribute('x')) } ${ element.getAttribute('y') } z" opacity="0.6" />
+                        `
+                        ];
+                
+                return x[(counter++)%2];
+            }
+
+            drawGameTemplate(325).then( (check) => check().then().catch( () => {alert('ERROR')} ));
         </script>
     </body>
 </html>
