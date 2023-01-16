@@ -47,7 +47,8 @@
             const game = document.getElementById("gameboard");
             const info = document.getElementById("info");
             const marking = document.getElementById("marking");
-            var rects = document.getElementsByTagName("rect");
+            const rects = document.getElementsByTagName("rect");
+            
             var elements = [];
 
             async function drawGameTemplate(a) {
@@ -83,15 +84,17 @@
                     
                     element.onclick = (event) => {
                         marking.innerHTML += setMarking(element);
-                            
+                        
                         element.onclick = ""
-
+                        
                         checkWhoWon();
                     };
                 }
             }
 
             function checkWhoWon() {
+                let finished = false;
+                
                 // Check for Player 1 (Cross, 0) and Player 2 (Circle, 1)
                 let players = [
                     // Cross
@@ -99,12 +102,13 @@
                     // Circle
                     1
                 ]
-
+                
                 let colors = [
                     "blue",
                     "green"
                 ]
-
+                
+                // Check for Cross and Circle (See above)
                 for(let player of players) {
                     // We need to check:
                     // top-left to top-right
@@ -113,23 +117,26 @@
                             <p style="color: ${ colors[player] };"><b>Spieler ${ player + 1 } hat gewonnen!</b></p>
                         `;
 
+                        finished = true;
                     }
                     
                     // middle-left to middle-right
                     if( rects["middle_left"].clickedWithMarking === player && rects["middle_center"].clickedWithMarking === player && rects["middle_right"].clickedWithMarking === player ) {
                         info.innerHTML += `
-                            <p style="color: ${ colors[player] };"><b>Spieler ${ player + 1 } hat gewonnen!</b></p>
+                        <p style="color: ${ colors[player] };"><b>Spieler ${ player + 1 } hat gewonnen!</b></p>
                         `;
-
+                        
+                        finished = true;
                     }
                     
                     
                     // bottom-left to bottom-right
                     if( rects["bottom_left"].clickedWithMarking === player && rects["bottom_center"].clickedWithMarking === player && rects["bottom_right"].clickedWithMarking === player ) {
                         info.innerHTML += `
-                            <p style="color: ${ colors[player] };"><b>Spieler ${ player + 1 } hat gewonnen!</b></p>
+                        <p style="color: ${ colors[player] };"><b>Spieler ${ player + 1 } hat gewonnen!</b></p>
                         `;
-
+                        
+                        finished = true;
                     }
                     
                     
@@ -139,6 +146,7 @@
                             <p style="color: ${ colors[player] };"><b>Spieler ${ player + 1 } hat gewonnen!</b></p>
                         `;
 
+                        finished = true;
                     }
                     
                     
@@ -157,6 +165,7 @@
                             <p style="color: ${ colors[player] };"><b>Spieler ${ player + 1 } hat gewonnen!</b></p>
                         `;
 
+                        finished = true;
                     }
                     
                     
@@ -166,6 +175,7 @@
                             <p style="color: ${ colors[player] };"><b>Spieler ${ player + 1 } hat gewonnen!</b></p>
                         `;
 
+                        finished = true;
                     }
                     
                     
@@ -175,12 +185,32 @@
                             <p style="color: ${ colors[player] };"><b>Spieler ${ player + 1 } hat gewonnen!</b></p>
                         `;
 
+                        finished = true;
                     }
 
                 }
+
+                // If the game is over, don't allow the player to continue the game. 
+                if( finished ) {
+                    for(let element of elements) {
+                        element.onclick = ""
+                    }
+                }
                 
                 // Check if every field is full
-
+                // let full = true;
+                // for(let rect of rects) {
+                //     if( !rect.clickedWithMarking ) {
+                //         full = false;
+                //         break;
+                //     }
+                // }
+                
+                // if( full ) {
+                //     info.innerHTML += `
+                //         <p style="color: orange;"><b>Unentschieden!</b></p>
+                //     `;
+                // }
 
                 // Reminder: 0 references the Cross and 1 references the Circle
             }
