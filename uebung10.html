@@ -2,6 +2,16 @@
 <html>
     <head>
         <link rel="stylesheet" href="stylesheet.css">
+        <style>
+            pre {
+                display: flex;
+                background-color: rgb(240, 240, 240);
+                border: 1px solid black;
+                border-radius: 1em;
+                width:max-content;
+                padding: 0 15vw 0 0;
+            }
+        </style>
     </head>
     <body>
         <nav>
@@ -29,5 +39,41 @@
             In Java-/Typescript gibt es die Möglichkeit, mit Literalen flexibel Objekte zu erzeugen, ohne vorher eine Klasse definiert zu haben. 
         </p>
         
+        <!-- 10.2 -->
+        <h3>10.2 Fehler finden mit TypeScript</h3>
+        <p>
+            Ein Fehler in TypeScript tritt unter zwei Bedingungen auf:
+            <ul>
+                <li>Es liegt ein gewöhnlicher Programmfehler vor.</li>
+                <li>Es wurde falsch typisiert.</li>
+            </ul>
+            Ein Programmfehler lässt sich definieren als ein Fehlverhalten. Also eine Abweichungen von einem erwarteten Code-spezifizierten Verhalten, welches ein entsprechendes Ergebnis
+            je nach der Konfiguration des Inputs liefern soll. Ohne die Spezifikation des Codes/Programms lässt sich das Fehlverhalten nicht auf den Fehler zurückführen.
+            Das heißt, dass der Fehler durch probeweisen Vergleich des Verhaltens bzw. Outputs mit dem Code ermittelt werden kann. 
+            <br>
+            <br>
+            Das Problem bei dem Code ist die Addition der booleschen Werte. Normalerweise werden Typ-bedingt nur number-Werte miteinander addiert 
+            (als auch die restlichen arithmetischen Operationen).
+            <br>
+            <br>
+            Das Prüfen der Gleichheit (equals) ist jedoch mit allen Typen möglich. In Java kann man mit generischen Typparametern voraussetzen, dass die Argumente der 
+            Methode vom selben Typen entsprechen. Dasselbe Prinzip ist sowohl in JavaScript als auch in TypeScript möglich. Die Korrektur sieht folgendermaßen aus:
+            <pre>
+                <code>
+    const add : any = (x:number,y:number) : number => { return x + y };
+    const equals : any = &ltT&gt(x:T,y:T) : boolean => { return x===y };
+
+    console.log( add(1, 1) ); // Gibt 2 aus
+    console.log( equals(1, 1) ); // Gibt true aus
+
+    var x = y = 1;
+    console.log( add(x, y) ) // Gibt 2 aus
+    console.log( equals(x, y) ) // Gibt true aus, da die Referenz von x und y gleich ist
+                </code>
+            </pre>
+        </p>
+
+        <!-- 10.3 -->
+        <h3>10.3 TypeScript auf Deno</h3>
     </body>
-</html>
+    </html>
