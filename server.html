@@ -1,0 +1,167 @@
+<pre>
+    <code>
+// deno-lint-ignore-file
+// Example from "https://dev.to/siddacool/deno-web-scrapper-3451"
+import { DOMParser } from "https://deno.land/x/deno_dom@v0.1.36-alpha/deno-dom-wasm.ts";
+
+const url = "https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html";
+
+const covid_data = async function() {
+  const res = await fetch(url);
+  const html = await res.text();
+  const doc: any = new DOMParser().parseFromString(html, 'text/html');
+  let covid = [];
+
+//   const data = doc.getElementsByTagName('td');
+  const data = doc.querySelectorAll('td');
+
+  for(let value of data.values()) {
+    if(value.textContent.includes(".")) {
+      covid.push( value.textContent.split(".").join(""))
+    } else if(value.textContent.includes(",")) {
+      covid.push( value.textContent.split(",").join("") )
+    } else {
+      covid.push( value.textContent.split(" ").join(""))
+    }
+  }
+
+  return covid;
+}
+
+const fallzahlen : string[] = await covid_data();
+const final_covid : { [index: string]: { [index: string]: number } } = {};
+
+// deno-lint-ignore no-var
+// deno-lint-ignore no-inferrable-types
+var i : number = 0;
+while( i < fallzahlen.length ) {
+  final_covid[fallzahlen[i++]] = (() => { 
+    return {
+      "Anzahl": parseInt(fallzahlen[i++]),
+      "Differenz zum Vortag": parseInt(fallzahlen[i++]),
+      "Fälle in den letzten 7 Tagen": parseInt(fallzahlen[i++]),
+      "7-Tage-Inzidenz": parseInt(fallzahlen[i++]),
+      "Todesfälle": parseInt(fallzahlen[i++])
+    }
+   })()
+}
+
+const cities = [
+  "Baden-Württem­berg",
+  "Bayern",
+  "Berlin",
+  "Branden­burg",
+  "Bremen",
+  "Hamburg",
+  "Hessen",
+  "Meck­lenburg-\nVor­pommern",
+  "Nieder­sachsen",
+  "Nord­rhein-West­falen",
+  "Rhein­land-Pfalz",
+  "Saarland",
+  "Sachsen",
+  "Sachsen-Anhalt",
+  "Schles­wig-Holstein",
+  "Thüringen"
+];
+
+const infos = Object.keys(final_covid["Gesamt"]);
+
+var values : any = {
+  "Minimum": getMinimum(),
+  "Maximum": getMaximum(),
+  "Durchschnitt": getDurchschnitt(),
+  "Summe": getSum()
+}
+
+function getMinimum() : { [index: string]: number } {
+  let result = [final_covid["Gesamt"][infos[0]], final_covid["Gesamt"][infos[1]], final_covid["Gesamt"][infos[2]], final_covid["Gesamt"][infos[3]], final_covid["Gesamt"][infos[4]]]
+  let x = 0;
+
+  for(let info of infos) {
+    for(let city of cities) {
+      if( result[x] > final_covid[city][info] ) {
+        result[x] = final_covid[city][info] 
+      }
+    }
+    x++;
+  }
+
+  return {
+    "Anzahl": result[0],
+    "Differenz zum Vortag": result[1],
+    "Fälle in den letzten 7 Tagen": result[2],
+    "7-Tage-Inzidenz": result[3],
+    "Todesfälle": result[4]
+  }
+}
+
+function getMaximum(): { [index: string]: number } {
+  let result = [0,0,0,0,0]
+  let x = 0;
+
+  for(let info of infos) {
+    for(let city of cities) {
+      if( result[x] < final_covid[city][info] ) {
+        result[x] = final_covid[city][info] 
+      }
+    }
+    x++;
+  }
+
+  return {
+    "Anzahl": result[0],
+    "Differenz zum Vortag": result[1],
+    "Fälle in den letzten 7 Tagen": result[2],
+    "7-Tage-Inzidenz": result[3],
+    "Todesfälle": result[4]
+  }
+}
+
+function getDurchschnitt(): { [index: string]: number } {
+  let result = [0,0,0,0,0]
+  let x = 0;
+
+  for(let info of infos) {
+    for(let city of cities) {
+        result[x] += final_covid[city][info] 
+    }
+    result[x] = result[x]/cities.length
+
+    x++;
+  }
+
+  return {
+    "Anzahl": result[0],
+    "Differenz zum Vortag": result[1],
+    "Fälle in den letzten 7 Tagen": result[2],
+    "7-Tage-Inzidenz": result[3],
+    "Todesfälle": result[4]
+  }
+}
+
+console.log( values )
+
+
+function getSum(): { [index: string]: number } {
+  let result = [0,0,0,0,0]
+  let x = 0;
+
+  for(let info of infos) {
+    for(let city of cities) {
+        result[x] += final_covid[city][info] 
+    }
+
+    x++;
+  }
+
+  return {
+    "Anzahl": result[0],
+    "Differenz zum Vortag": result[1],
+    "Fälle in den letzten 7 Tagen": result[2],
+    "7-Tage-Inzidenz": result[3],
+    "Todesfälle": result[4]
+  }
+}
+</code>
+</pre>
