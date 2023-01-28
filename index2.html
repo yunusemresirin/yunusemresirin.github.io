@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="mainpage.css">
+        <style>
+            /* Inspiration from https://www.youtube.com/watch?v=1wfeqDyMUx4&t=401s */
+            @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900&display=swap');
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Poppings', sans-serif;
+
+            }
+
+            body {
+                min-height: 100vh;
+                background: linear-gradient(#2b1055, #7597de);
+                overflow-x: hidden;
+
+            }
+
+            header {
+                z-index: 10000;
+                position: absolute;
+                display: flex;
+                top: 0;
+                left: 0;
+                width: 85vw;
+                margin: 30px 85px;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            header .logo {
+                color: #fff;
+                font-weight: 700;
+                text-decoration: none;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            }
+
+            header ul {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            header ul li {
+                list-style: none;
+                margin-left: 20px;
+            }
+
+            header ul li a {
+                color: #fff;
+                text-decoration: none;
+                padding: 6px 15px;
+                border-radius: 20px;
+            }
+
+            header ul li a.active, header ul li a:hover {
+                color: #2b1055;
+                background-color: #fff;
+            }
+
+            section {
+                position: relative;
+                width: 100%;
+                height: 100vh;
+                /* padding: 100px; */
+            }
+
+            section img {
+                position: absolute;
+                top: -150px;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                z-index: 1;
+            }
+
+            #space {
+                transform: scale(2);
+            }
+
+            .text {
+                position: absolute;
+                display: flex;
+                top: 60vh;
+                padding: 100px;
+                z-index: 10000;
+            }
+
+            .backgroundtext {
+                position: relative;
+                display: flex;
+                background: lightgrey;
+                opacity: 0.3;
+                z-index: 1000;
+                width: 100%;
+            }
+
+            .text p {
+                font-size: 1.2em;
+                color: #fff;
+                letter-spacing: 2px;
+            }
+        </style>
+    </head>
+    <body>
+       <header>
+            <a href="#" class="logo">Solution Navigator</a>
+            <ul>
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="solutions.html">Solutions</a></li>
+            </ul>
+       </header>
+       <section>
+            <img src="img/space.jpg" id="space">
+       </section>
+       <div class="text">
+        <div class="backgroundtext"></div>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            sed do eiusmod tempor incididunt ut labore et dolore magna 
+            aliqua. Lorem ipsum dolor sit amet consectetur adipiscing. 
+            Pellentesque massa placerat duis ultricies lacus sed turpis
+             tincidunt. Vestibulum rhoncus est pellentesque elit 
+             ullamcorper. Mauris in aliquam sem fringilla ut morbi tincidunt. 
+             Sit amet nisl purus in mollis nunc sed. Pharetra et ultrices 
+             neque ornare aenean euismod. Sit amet nisl suscipit adipiscing 
+             bibendum est ultricies integer. Sagittis vitae et leo duis ut diam 
+             quam nulla. Amet aliquam id diam maecenas ultricies mi eget mauris 
+             pharetra. Donec ultrices tincidunt arcu non sodales neque. Tellus
+              at urna condimentum mattis pellentesque. Ut porttitor leo a diam 
+              sollicitudin tempor id eu nisl. Lobortis elementum nibh tellus molestie.
+        </p>
+       </div>
+    </body>
+    <script>
+        let space = document.getElementById("space");
+
+        window.addEventListener("scroll", () => {
+            let value = window.scrollY;
+            if(window.outerWidth > 800) {
+                space.style.left = value * -0.5 + 'px'
+
+            }
+        })
+
+        addEventListener('resize', () => {
+            if(window.outerWidth < 1400) {
+                space.style.left = 0;
+            }
+        })
+    </script>
+</html>
