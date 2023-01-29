@@ -20,7 +20,7 @@ nav {
 }
 
 nav > a {
-    font-size: 82px;
+    font-size: 12px;
     text-decoration: none;
     color: #fff;
     background-color: rgb(43, 16, 85);
@@ -40,8 +40,8 @@ a:hover {
 a {
     font-size: 14px;
     text-decoration: none;
-    color: black;
-    background-color: rgb(61, 123, 255);
+    color: #fff;
+    background-color: rgb(43, 16, 85);
     border-radius: 5px;
     padding: 10px;
 }
