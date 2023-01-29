@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Eine Webseite mit Solutions zu den WE-Übungen">
+        <meta name="keywords" content="Solution-Navigator, Web-Engineering, Yunus Emre Sirin, Yunus, Emre, Sirin, 9040908">
+        <meta name="author" content="Yunus Emre Sirin">
+        <link rel="stylesheet" href="stylesheet.css">
+    </head>
+    <body>
+        <!-- Links -->
+        <div class="nav-link">
+            <nav>
+                <a href="index.html">Home</a> |
+                <a href="solutions.html">Solutions</a>
+            </nav>
+        </div>
+    </body>
+</html>

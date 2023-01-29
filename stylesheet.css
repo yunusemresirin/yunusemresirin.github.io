@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900&display=swap');
+
+* {
+    font-family: 'Poppings', sans-serif;
+
+}
+
 body {
     padding-left: 1vh;
     background-color: #ececec;
@@ -6,20 +13,22 @@ body {
 nav {
     display: inline-block;
     background-color: white;
-    border: 3px solid rgb(38, 110, 246);
+    border: 3px solid rgb(43, 16, 85);
     border-radius: 0.5em;
     padding: 1em;
     margin: 1.5em;
 }
 
 nav > a {
-    font-size: 14px;
+    font-size: 82px;
     text-decoration: none;
-    color: rgb(190, 190, 190);
-    background-color: rgb(147, 192, 255);
+    color: #fff;
+    background-color: rgb(43, 16, 85);
     padding: 10px;
     margin: 0.2em;
     border-radius: 5px;
+
+    text-transform: uppercase;
 }
 
 a:hover {
