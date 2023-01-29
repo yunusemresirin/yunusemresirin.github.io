@@ -76,7 +76,7 @@
                 function outerHTMLtest() {
                     let outerhtmlstart = performance.now();
                     // .outerHTML is null/undefined ?
-                    document.getElementById("outerHTMLtest").innerHTML="<td><p id=\'testText\'></p></td>";
+                    document.getElementById("outerHTMLtest").outerHTML="<td><p id=\'testText\'></p></td>";
                     return performance.now() - outerhtmlstart;
                 }
     
