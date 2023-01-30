@@ -142,6 +142,7 @@
                 }
             })();
 
+            // IIFE Pattern
             (async function (){
                 let A = helper_2.getA();
                 let B = helper_2.getB();
@@ -170,12 +171,24 @@
         }
     })();
 
+    // IIFE Pattern
     (async function (){
         let A = await helper_2.getA();
         let B = await helper_2.getB();
         let [aResponse, bResponse] = [await A, await B];
         doc_2.innerText = aResponse + bResponse;
     })()
+
+    /* Alternative
+    (async function (){
+        const list = await Promise.all[
+            helper_2.getA(),
+            helper_2.getB()
+        ];
+        doc_2.innerText = list[0] + list[1];
+    })()
+    
+    */
             </code>
         </pre>
 

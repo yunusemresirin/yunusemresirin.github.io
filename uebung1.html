@@ -106,7 +106,9 @@
                 Aus Performanzgründen soll die Abfrage jedoch cacheable sein. Wie könnten Sie dafür eine Lösung angehen?
             </li>
             <ul>
-                <li></li>
+                <li>Setzen Sie einen passenden Cache-Control-Header in der Antwort auf die OPTIONS-Anfrage, um den Client anzuleiten, die Antwort für eine bestimmte Zeit im Cache zu speichern</li>
+                <li>Verwenden Sie einen geeigneten HTTP-Cache wie einen CDN oder einen Reverse-Proxy, der die Antworten auf OPTIONS-Anfragen für Sie zwischenspeichern kann</li>
+                <li>Überprüfen Sie regelmäßig, ob Änderungen an den Serveroptionen vorgenommen wurden, und aktualisieren Sie ggf. die Antworten im Cache.</li>
             </ul>
         </ol>
 
