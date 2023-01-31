@@ -65,6 +65,17 @@
                 list-style:square;
                 margin-left: 1em;
             }
+
+            #square {
+                width: 30px;
+                height: 30px;
+                position: relative;
+                top: 0;
+                left: 0;
+                margin: 2em;
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
         </style>
     </head>
     <body>
@@ -106,7 +117,19 @@
                                         </p>
                                     </li>
                                     <li>
-                                        <h3></h3>
+                                        <h3>requestAnimationFrame</h3>
+                                        <p>
+                                            requestAnimationFrame() ist eine JavaScript-Funktion, die es ermöglicht, eine Funktion (einen "Animations-Frame") aufzurufen, 
+                                            während eine Animation läuft. Diese Funktion gibt einen requestId zurück, der verwendet werden kann, um die Animation mit cancelAnimationFrame() zu beenden.
+                                            <br><br>
+                                            Der Vorteil von requestAnimationFrame ist, dass es die Animation mit der Bildrate des Geräts synchronisiert, was bedeutet, dass es 
+                                            die bestmögliche Leistung und Energieeffizienz bietet. 
+                                            <br><br>
+                                            Im Gegensatz dazu werden bei Verwendung von setInterval oder setTimeout unnötige Frames berechnet, 
+                                            was zu einer schlechteren Leistung und höheren Energieaufnahme führen kann.
+                                            Ein einfaches Beispiel für die Verwendung von requestAnimationFrame ist eine Animation eines pulsierenden Quadrates:
+                                        </p>
+                                        <div id="square"></div>
                                     </li>
                                 </ul>
                             </div>
@@ -115,5 +138,36 @@
                 </ul>
             </div>
         </section>
+        <script>
+            let square = document.getElementById('square');
+            let angle = 0;
+            let scale = 1;
+            let growing = true;
+            let hue = 0;
+
+            function animate() {
+            angle = (angle + 2) % 360;
+            square.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scale(${scale})`;
+            square.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+            hue = (hue + 1) % 360;
+
+            if (growing) {
+                scale += 0.05;
+            } else {
+                scale -= 0.05;
+            }
+
+            if (scale >= 1.5) {
+                growing = false;
+            } else if (scale <= 0.5) {
+                growing = true;
+            }
+
+            requestAnimationFrame(animate);
+            }
+
+            requestAnimationFrame(animate);
+
+        </script>
     </body>
 </html>
