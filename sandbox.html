@@ -205,13 +205,13 @@
                 while (deadline.timeRemaining() > 0) {
                     if (taskQueue.length > 0) {
                         let task = taskQueue.shift();
-                        task();
+                        task(); // Eine beliebige Task
                     }
                 }
             }
 
             // Verwendung von requestIdleCallback
-            requestIdleCallback(processTasks);
+            // requestIdleCallback(processTasks);
         </script>
     </body>
 </html>
