@@ -79,18 +79,22 @@
             </code>
         </pre>
         <script>
-            const x = { a: 1, b: 2, c: [ { d: 3 }, 4 ] };
+            const x = { a: { b: 1 }, c: [ { d: 2 }, 3 ] };
 
-            const deepCopy = ( structure ) =>
-            Array.isArray( structure ) ? structure.map( item => deepCopy( item ) ) :
-                typeof structure === "object" && structure !== null ? Object.fromEntries( Object.entries( structure ).map( ([key, value]) => [ key, deepCopy( value ) ] ) ) :
-                structure;
+            const deepCopy = struct =>
+                Array.isArray(struct)
+                    ? struct.map(deepCopy) // Falls der Eintrag ein Array ist, die Inhalte in dem Array zusätzlich kopieren
+                    : typeof struct === "object" 
+                    ? Object.fromEntries(Object.entries(struct).map(([k, v]) => [k, deepCopy(v)])) // Dasselbe Prinzip für Objekte
+                    : struct; // Ansonten gebe den Eintrag aus, oder die inneren kopierten Properties
 
             const y = deepCopy(x);
 
             console.log(x)
             console.log(y)
-
+            
+            // ------------------------------------------------------------------------------------------------------- 
+            
             // https://stackoverflow.com/questions/39682676/creating-a-deepequal-function-in-javascript
             var deepEqual = function(obj1, obj2) {
                 // if they reference the same object in memory, then they are the same
