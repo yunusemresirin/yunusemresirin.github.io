@@ -3,18 +3,23 @@ type Role = 'admin' | 'user' | 'guest';
 
 function checkAccess(role: Role) {
   switch (role) {
+    
     case 'admin':
       console.log('You have admin access');
       break;
+
     case 'user':
       console.log('You have user access');
       break;
+
     case 'guest':
       console.log('You have guest access');
       break;
+
     default:
       console.log('Access denied');
   }
+
 }
 
 checkAccess('admin');
@@ -26,14 +31,14 @@ checkAccess('user');
 checkAccess('guest');
 // Output: You have guest access
 
-checkAccess('unknown');
+// checkAccess('unknown');
 // Output: Access denied
 
 /*
-    In diesem Beispiel wird ein Union Type namens Role erstellt, 
+    In diesem Beispiel wird ein Union Type Role erstellt, 
     das die möglichen Rollen repräsentiert, die ein Benutzer haben kann 
     ('admin', 'user' oder 'guest'). Die checkAccess-Funktion verwendet 
-    dann diesen Union Type als Argumenttyp, um zu überprüfen, welche 
+    dann diesen Union Type als Argumenttypen, um zu überprüfen, welche 
     Zugriffsrechte ein Benutzer hat.
 */
 
@@ -91,9 +96,8 @@ interface User {
   /*
     In diesem Beispiel wird der Utility Type ReturnType<> verwendet, um den 
     Rückgabetyp der createUser-Funktion zu ermitteln. ReturnType<typeof 
-    createUser> gibt uns den Typ User, den die Funktion zurückgibt. Wir 
-    können dann diesen Typ in einer Variablen namens userDataType speichern 
-    und ihn für die Typprüfung verwenden, wenn wir die Funktion createUser aufrufen.
+    createUser> gibt uns den Typ User. Wir können dann diesen Typ in einer 
+    Variablen namens userDataType speichern.
   */
 
 // -----------------------------------------------------------------------
