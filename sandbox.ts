@@ -1,4 +1,4 @@
-// Hier ist ein Beispielcode, der Union Types in TypeScript verwendet:
+// Union Types
 type Role = 'admin' | 'user' | 'guest';
 
 function checkAccess(role: Role) {
@@ -39,7 +39,7 @@ checkAccess('unknown');
 
 // -----------------------------------------------------------------------------------
 
-// Hier ist ein Beispielcode, der den Utility Type Partial<> in TypeScript verwendet:
+// Partial<>
 interface User {
     name: string;
     age: number;
@@ -50,7 +50,7 @@ interface User {
     return {...user};
   }
   
-  const user = {
+  const _user = {
     name: 'John Doe',
     age: 30,
     address: '123 Main St'
@@ -72,13 +72,7 @@ interface User {
 
 // -------------------------------------------------------------------
 
-// Hier ist ein Beispielcode, der den Utility Type ReturnType<> in TypeScript verwendet:
-interface User {
-    name: string;
-    age: number;
-    address: string;
-  }
-  
+// ReturnType<>
   function createUser(): User {
     return {
       name: 'John Doe',

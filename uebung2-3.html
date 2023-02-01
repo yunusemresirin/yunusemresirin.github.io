@@ -9,16 +9,18 @@
                 text-decoration: none;
                 font-size: larger;
             }
+            
             a:hover{
                 color: gray;
             }
+
             body{
-                background-color: #a9d7d1;
+                background-color: #92bbb6;
                 font-family: Helvetica, Arial;
             }
     
             #hintergrund{
-                background-color: #a9d7d1;
+                background-color: #92bbb6;
                 text-align: center;
             }
     
@@ -28,18 +30,28 @@
                 width: 800px;
                 border-radius: 10px;
                 padding: 20px 10px 10px 10px;
+
+                box-shadow: 10px 10px 2.5em black;
+
+                animation: appear 1s linear 1;
             } 
+
+            @keyframes appear {
+                0% {
+                    box-shadow: none;
+                }
+
+                100% {
+                    box-shadow: 10px 10px 2.5em black;
+                }
+            }
     
-            p{
+            p {
                 padding-top: 20px;
                 display: block;
-                margin-block-start: 1em;
-                margin-block-end: 1em;
-                margin-inline-start: 0px;
-                margin-inline-end: 0px;
             }
             
-            .form-rows {
+            .zeilen {
                 position: static;
                 display: block;
             }
@@ -47,35 +59,41 @@
             .labels {
                 display: inline-block;
                 text-align: right;
+
                 width: 40%;
                 padding: 5px;
                 vertical-align: top;
                 margin-top: 10px;
             }
     
-            .fields {
+            .felder {
                 display: inline-block;
                 text-align: left;
+
                 width: 48%;
                 vertical-align: middle;
             }
     
             .input-fields {
-                height: 20px;
-                width: 280px;
-                padding: 5px;
-                margin: 10px;
                 border: 1px solid #c0c0c0;
                 border-radius: 4px;
+
+                height: 20px;
+                width: 280px;
+
+                padding: 5px;
+                margin: 10px;
             }
     
             .dropdown {
-                height: 35px;
-                width: 140px;
-                padding: 5px;
-                margin: 15px 10px 10px 10px;
                 border: 1px solid #c0c0c0;
                 border-radius: 4px;
+
+                height: 35px;
+                width: 140px;
+
+                padding: 5px;
+                margin: 15px 10px 10px 10px;
             }
     
             .radio {
@@ -94,8 +112,10 @@
             input[type="radio" i] {
                 background-color: initial;
                 cursor: default;
+
                 appearance: auto;
                 box-sizing: border-box;
+
                 margin: 3px 3px 0px 5px;
                 padding: initial;
                 border: initial;
@@ -105,58 +125,65 @@
                 font-size: 1em;
                 background-color: #005091;
                 color: white;
+                text-transform: uppercase;
+
                 border: 0px solid;
                 border-radius: 4px;
+
                 height: 40px;
                 width: 80px;
                 margin: 10px;
             }
             
+            .button:hover {
+                opacity: 0.7;
+                cursor: pointer;
+            }
         </style>
     
     </head>
     
     <body>
-        <div class="startpage">
-            <a href="uebung2.html">Zurueck</a>
+        <div class="startseite">
+            <a href="uebung2.html">Back</a>
         </div>
         <div id="hintergrund">
-            <h1>Survey Form</h1>
+            <h1 style="color: #fff;">Survey Form</h1>
             <div id="vordergrund">
                 <p id="e1">Let us know how we can improve freeCodeCamp</p>
     
-                <div class="form-rows">
+                <div class="zeilen">
                     <div class="labels">
                     <label for="name" id="name-label">*Name</label>
                 </div>
-                <div class="fields">
+                <div class="felder">
                     <input type="text" id="name" class="input-fields" placeholder="Enter your name" required>
                 </div>
             </div>
     
-            <div class="form-rows">
+            <div class="zeilen">
                 <div class="labels">
                     <label for="email" id="email-label">*Email</label>
                 </div>
-                <div class="fields">
+                <div class="felder">
                     <input type="email" id="email" class="input-fields" placeholder="Enter your Email" required>
                 </div>
             </div>
     
-            <div class="form-rows">
+            <div class="zeilen">
                 <div class="labels">
                     <label for="number" id="number-label">*Age</label>
                 </div>
-                <div class="fields">
+                <div class="felder">
                     <input type="number" id="number" class="input-fields" placeholder="Age" required>
                 </div>
             </div>
     
-            <div class="form-rows">
+            <div class="zeilen">
                 <div class="labels" style="padding-top: 12px">
                     <label for="dropdown" id="dropdown-label">Which option best describes your current role?</label>
                 </div>
-                <div class="fields">
+                <div class="felder">
                     <select name="role"  id="dropdown" class="dropdown">
                         <option value="Student">Student</option>
                         <option value="Prof">Prof</option>
@@ -164,11 +191,11 @@
                 </div>
             </div>
     
-            <div class="form-rows">
+            <div class="zeilen">
                 <div class="labels">
                     <label for="recommend">*How likely is that you would recommend freeCodeCamp a friend?</label>
                 </div>
-                <div class="fields">
+                <div class="felder">
                     <ul id="recommend" style="list-style: none;">
                         <li class="radio">
                             <label>
@@ -192,11 +219,11 @@
                 </div>
             </div>
     
-            <div class="form-rows">
+            <div class="zeilen">
                 <div class="labels" style="padding-top: 12px">
                     <label for="dropdown" id="dropdown-label">What do you like most in FCC:</label>
                 </div>
-                <div class="fields">
+                <div class="felder">
                     <select name="likeMost" id="dropdown" class="dropdown">
                         <option value="select">Select an option</option>
                         <option value="a">A</option>
@@ -206,11 +233,11 @@
                 </div>
             </div>
     
-            <div class="form-rows">
+            <div class="zeilen">
                 <div class="labels">
                     <label for="improve">Things that should be improved in the future <br> (Check all that apply):</label>
                 </div>
-                <div class="fields">
+                <div class="felder">
                     <ul id="improve" style="list-style: none;">
                         <li class="radio">
                             <label>

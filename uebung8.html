@@ -115,6 +115,16 @@
     .catch((error) => {
         doc.innerText = error;
     })
+
+    /* Alternative
+        (async function (){
+            const list = await Promise.all[
+                helper_2.getA(),
+                helper_2.getB()
+            ];
+            doc_2.innerText = list[0] + list[1];
+        })()
+    */
             </code>
         </pre>
         
@@ -178,17 +188,6 @@
         let [aResponse, bResponse] = [await A, await B];
         doc_2.innerText = aResponse + bResponse;
     })()
-
-    /* Alternative
-    (async function (){
-        const list = await Promise.all[
-            helper_2.getA(),
-            helper_2.getB()
-        ];
-        doc_2.innerText = list[0] + list[1];
-    })()
-    
-    */
             </code>
         </pre>
 

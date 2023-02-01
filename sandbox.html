@@ -24,10 +24,10 @@
                 display: grid;
                 grid: 10% 90% / 100%;
 
-                width: 75vw;
-                /* height: 100vh; */
+                width: 100%;
+                height: 100em;
                 padding: 2em 1.5em;
-                margin: 2em 0;
+                margin: 2em;
                 
                 background: linear-gradient(rgba(43,16,85, 0.8), rgba(80, 80, 255, 0.7));
                 border-radius: 10px;
@@ -56,6 +56,7 @@
             }
 
             .sandbox {
+                margin-top: -5em;
                 background-color: rgba(180,180,180,0.5);
                 padding: 1em;
                 border-radius: 2em;
@@ -63,10 +64,11 @@
 
             .sandbox ul li {
                 list-style: none;
+                margin-top: 0.5rem;
             }
 
             #datatypes li {
-                list-style:square;
+                list-style: square;
                 margin-left: 1em;
             }
 
@@ -76,7 +78,7 @@
                 position: relative;
                 top: 0;
                 left: 0;
-                margin: 2em;
+                margin: 2.5em 50%;
                 transform: translate(-50%, -50%) rotate(0deg);
             }
 
@@ -140,22 +142,22 @@
                                         <p>
                                             requestIdleCallback() ist eine JavaScript Funktion, die es ermöglicht, Code asynchron auszuführen, wenn der Browser nicht beschäftigt ist.
                                             Zum Beispiel:
-                                        </p>
-                                        <code>
-                                            // Funktion, die bei Freizeit ausgeführt werden soll
-                                            function processTasks(deadline) {
-                                                while (deadline.timeRemaining() > 0) {
-                                                    if (taskQueue.length > 0) {
-                                                        let task = taskQueue.shift();
-                                                        task();
-                                                    }
-                                                }
-                                            }
+                                            <pre>
+                                                <code>
+    // Funktion, die bei Freizeit ausgeführt werden soll
+    function processTasks( deadline ) {
+        while ( deadline.timeRemaining() > 0 ) {
+            if ( taskQueue.length > 0 ) {
+                let task = taskQueue.shift();
+                task(); // Eine beliebige Task
+            }
+        }
+    }
 
-                                            // Verwendung von requestIdleCallback
-                                            requestIdleCallback(processTasks);
-                                        </code>
-                                        <p>
+    // Verwendung von requestIdleCallback
+    requestIdleCallback(processTasks);
+                                                </code>
+                                            </pre>
                                             In diesem Beispiel wird die Funktion processTasks bei 
                                             Freizeit des Browsers ausgeführt, die über die Funktion 
                                             requestIdleCallback angefordert wird. Die Funktion 
@@ -166,6 +168,25 @@
                                 </ul>
                             </div>
                         </div>
+                    </li>
+                    <li>
+                        <h2>Scalable Vector Graphics</h2>
+                        <ul>
+                            <li>
+                                <h3>SVG Animation mit SMIL</h3>
+                                <p>Hier ist ein Beispiel für eine SVG-Animation mit SMIL (Synchronized Multimedia Integration Language) in HTML:</p>
+                                <svg width="100" height="100">
+                                    <rect x="0" y="0" width="100" height="100" fill="#6f9">
+                                      <animate attributeName="x" from="0" to="200" dur="6s" repeatCount="indefinite"/>
+                                    </rect>
+                                </svg>
+                                <p>
+                                    In diesem Beispiel animieren wir die x-Position eines Rechtecks innerhalb eines SVG-Elements. 
+                                    Die Animation bewegt das Rechteck von x=0 nach x=200 in 3 Sekunden, wobei die Animation unendlich 
+                                    oft wiederholt wird (repeatCount="indefinite").
+                                </p>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
